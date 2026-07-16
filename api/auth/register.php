@@ -36,7 +36,8 @@ if ($checkStmt->get_result()->num_rows > 0) {
     exit;
 }
 
-$sql = "INSERT INTO users(username,password) VALUES(?,?)";
+$sql = "INSERT INTO users(username,password,token,role)
+VALUES(?,?,?,'user')";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ss", $username, $password);

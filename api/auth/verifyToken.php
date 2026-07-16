@@ -27,8 +27,9 @@ if ($result->num_rows > 0) {
 
     echo json_encode([
         "success" => true,
-        "message" => "Token geçerli",
-        "username" => $user["username"]
+        "username" => $user["username"],
+        "role" => $user["role"],
+        "image" => $user["image"]
     ]);
 } else {
 

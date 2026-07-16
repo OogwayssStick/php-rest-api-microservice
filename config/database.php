@@ -1,11 +1,11 @@
 <?php
 
-$host = "db";
-$user = "admin";
-$pass = "123456";
-$db   = "microservice_db";
+$host = "localhost";
+$user = "projectuser";
+$password = "123456";
+$database = "mircroservice_db"; // Senin oluşturduğun isim
 
-$conn = new mysqli($host, $user, $pass, $db);
+$conn = new mysqli($host, $user, $password, $database);
 
 if ($conn->connect_error) {
     die("Bağlantı hatası: " . $conn->connect_error);

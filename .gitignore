@@ -1,5 +1,23 @@
-vendor/
-logs/*.log
+# IDE
 .vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Upload edilen dosyalar
+uploads/products/*
+!uploads/products/default.png
+
+uploads/profile/*
+!uploads/profile/default.jpg
+
+# Composer
+vendor/
+
+# Environment
 .env
-node_modules/

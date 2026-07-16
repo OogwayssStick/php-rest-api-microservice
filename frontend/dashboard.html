@@ -1,95 +1,198 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 
 <head>
+    <meta charset="UTF-8">
+
     <title>Dashboard</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 </head>
 
 <body>
 
-    <h1>Dashboard</h1>
+    <div class="d-flex">
 
-    <p id="message"></p>
+        <!-- Sidebar -->
+        <div id="sidebar"></div>
 
-    <button id="logoutBtn">Çıkış Yap</button>
+        <!-- Content -->
+        <div class="content">
 
-    <script>
+            <!-- Navbar -->
+            <div id="navbar"></div>
 
-        const token = localStorage.getItem("token");
+            <!-- Dashboard Başlığı -->
+            <div class="mb-4">
 
-        if (!token) {
-            window.location.href = "login.html";
-        }
 
-        $.ajax({
+            </div>
 
-            url: "../api/auth/verifyToken.php",
+            <!-- Kartlar -->
+            <div class="row g-4">
 
-            type: "GET",
+                <div class="col-md-3">
 
-            headers: {
-                "Authorization": token
-            },
+                    <div class="card bg-primary text-white shadow">
 
-            success: function (response) {
+                        <div class="card-body text-center">
 
-                if (response.success) {
+                            <h5>Products</h5>
 
-                    $("#message").html(
-                        "Token doğrulandı. Hoş geldiniz."
-                    );
+                            <h2 id="productCount">0</h2>
 
-                } else {
+                        </div>
 
-                    localStorage.removeItem("token");
+                    </div>
 
-                    window.location.href = "login.html";
-                }
-            },
+                </div>
 
-            error: function () {
+                <div class="col-md-3">
 
-                localStorage.removeItem("token");
+                    <div class="card bg-success text-white shadow">
 
-                window.location.href = "login.html";
-            }
+                        <div class="card-body text-center">
 
-        });
+                            <h5>Users</h5>
 
-        $("#logoutBtn").click(function () {
+                            <h2 id="userCount">0</h2>
 
-            $.ajax({
+                        </div>
 
-                url: "../api/auth/logout.php",
+                    </div>
 
-                type: "POST",
+                </div>
 
-                headers: {
-                    "Authorization": localStorage.getItem("token")
-                },
+                <div class="col-md-3">
 
-                success: function () {
+                    <div class="card bg-warning shadow">
 
-                    localStorage.removeItem("token");
+                        <div class="card-body text-center">
 
-                    window.location.href = "login.html";
+                            <h5>Discount</h5>
 
-                },
+                            <h2 id="discountCount">0</h2>
 
-                error: function () {
+                        </div>
 
-                    alert("Çıkış yapılamadı.");
+                    </div>
 
-                }
+                </div>
 
-            });
+                <div class="col-md-3">
 
-        });
+                    <div class="card bg-danger text-white shadow">
 
-    </script>
+                        <div class="card-body text-center">
 
+                            <h5>Active</h5>
+
+                            <h2 id="saleCount">0</h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row mt-5">
+
+                <div class="col-lg-8">
+
+                    <div class="card shadow">
+
+                        <div class="card-header bg-primary text-white">
+
+                            Son Eklenen Ürünler
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <table class="table table-hover">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>ID</th>
+                                        <th>Ürün</th>
+                                        <th>Fiyat</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="lastProducts">
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4">
+
+                    <div class="card shadow">
+
+                        <div class="card-header bg-success text-white">
+
+                            Son Kullanıcılar
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <ul class="list-group" id="lastUsers">
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row mt-4">
+
+                <div class="col-lg-6">
+
+                    <div class="card shadow">
+
+                        <div class="card-header bg-primary text-white">
+
+                            Ürün Durumu
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <canvas id="productChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="js/common.js"></script>
+            <script src="js/dashboard.js"></script>
 </body>
 
 </html>

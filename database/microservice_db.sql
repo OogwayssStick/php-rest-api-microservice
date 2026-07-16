@@ -1,158 +1,1084 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Anamakine: 127.0.0.1
--- Üretim Zamanı: 12 Tem 2026, 03:00:22
--- Sunucu sürümü: 10.4.32-MariaDB
--- PHP Sürümü: 8.2.12
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */
-;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */
-;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */
-;
-/*!40101 SET NAMES utf8mb4 */
-;
---
--- Veritabanı: `microservice_db`
---
+/*
+ Navicat Premium Dump SQL
 
--- --------------------------------------------------------
---
--- Tablo için tablo yapısı `products`
---
+ Source Server         : Docker MySQL
+ Source Server Type    : MySQL
+ Source Server Version : 80046 (8.0.46)
+ Source Host           : 127.0.0.1:3307
+ Source Schema         : microservice_db
 
-CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
-  `product_name` varchar(255) NOT NULL,
-  `description` text DEFAULT NULL,
+ Target Server Type    : MySQL
+ Target Server Version : 80046 (8.0.46)
+ File Encoding         : 65001
+
+ Date: 13/07/2026 16:19:13
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for products
+-- ----------------------------
+DROP TABLE IF EXISTS `products`;
+CREATE TABLE `products`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `price` decimal(10, 2) NOT NULL,
-  `discount` enum('Var', 'Yok') DEFAULT 'Yok',
-  `sale_status` enum('Satışta', 'Satışta Değil') DEFAULT 'Satışta',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
---
--- Tablo döküm verisi `products`
---
+  `discount` enum('Var','Yok') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'Yok',
+  `sale_status` enum('Satışta','Satışta Değil') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'Satışta',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_id` int NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'uploads/users/default.png',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1010 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
-INSERT INTO `products` (
-    `id`,
-    `product_name`,
-    `description`,
-    `price`,
-    `discount`,
-    `sale_status`,
-    `created_at`
-  )
-VALUES (
-    1,
-    'iPhone 16',
-    '256 GB Mavi',
-    80000.00,
-    'Var',
-    'Satışta',
-    '2026-07-11 23:04:06'
-  ),
-  (
-    5,
-    'iPhone 11',
-    '128 GB',
-    30000.00,
-    'Var',
-    'Satışta Değil',
-    '2026-07-12 00:41:20'
-  ),
-  (
-    6,
-    'ihpne 22',
-    'mfawkf',
-    323422.00,
-    'Var',
-    'Satışta Değil',
-    '2026-07-12 00:45:25'
-  );
--- --------------------------------------------------------
---
--- Tablo için tablo yapısı `users`
---
+-- ----------------------------
+-- Records of products
+-- ----------------------------
+INSERT INTO `products` VALUES (1, 'iPhone 16', '256 GB Mavi', 80000.00, 'Var', 'Satışta', '2026-07-11 23:04:06', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (5, 'iPhone 11', '128 GB', 30000.00, 'Var', 'Satışta Değil', '2026-07-12 00:41:20', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (6, 'ihpne 22', 'mfawkf', 323422.00, 'Var', 'Satışta Değil', '2026-07-12 00:45:25', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (8, 'iPhone 16', '256 GB Mavi', 14433.46, 'Var', 'Satışta Değil', '2026-07-13 08:22:13', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (9, 'JBL Charge', 'Garantili', 14304.57, 'Yok', 'Satışta Değil', '2026-07-13 08:22:13', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (10, 'Lenovo ThinkPad', 'Kutulu', 24139.36, 'Var', 'Satışta Değil', '2026-07-13 08:22:13', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (11, 'Apple Watch', 'Premium Seri', 33144.05, 'Var', 'Satışta', '2026-07-13 08:22:13', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (12, 'Asus ROG', 'Kutulu', 81203.93, 'Yok', 'Satışta Değil', '2026-07-13 08:22:13', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (13, 'Samsung Galaxy S25', 'Yeni Model', 48774.73, 'Var', 'Satışta', '2026-07-13 08:22:13', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (14, 'Canon EOS R50', 'Yeni Model', 34265.35, 'Yok', 'Satışta', '2026-07-13 08:22:13', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (15, 'Surface Laptop', '128 GB Siyah', 5709.05, 'Var', 'Satışta Değil', '2026-07-13 08:22:13', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (16, 'LG UltraGear', '1 TB Gri', 34479.01, 'Yok', 'Satışta', '2026-07-13 08:22:13', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (17, 'JBL Charge', '512 GB Beyaz', 15614.86, 'Yok', 'Satışta', '2026-07-13 08:22:13', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (18, 'Acer Nitro', 'Faturalı', 16130.99, 'Yok', 'Satışta Değil', '2026-07-13 08:22:13', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (19, 'Acer Nitro', 'Faturalı', 20210.13, 'Yok', 'Satışta', '2026-07-13 08:22:13', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (20, 'Logitech MX Master', '128 GB Siyah', 79032.29, 'Var', 'Satışta Değil', '2026-07-13 08:22:13', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (21, 'SteelSeries Apex', '1 TB Gri', 75572.46, 'Var', 'Satışta', '2026-07-13 08:22:13', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (22, 'Huawei MateBook', 'Garantili', 3150.68, 'Yok', 'Satışta', '2026-07-13 08:22:13', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (23, 'LG UltraGear', 'İkinci El Temiz', 83936.60, 'Yok', 'Satışta Değil', '2026-07-13 08:22:13', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (24, 'AirPods Pro', '128 GB Siyah', 51543.49, 'Var', 'Satışta Değil', '2026-07-13 08:22:13', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (25, 'MacBook Pro', 'Hızlı Teslim', 12262.96, 'Yok', 'Satışta Değil', '2026-07-13 08:22:13', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (26, 'SteelSeries Apex', 'Sıfır Ürün', 39780.52, 'Var', 'Satışta Değil', '2026-07-13 08:22:13', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (27, 'Acer Nitro', 'İkinci El Temiz', 51200.64, 'Yok', 'Satışta Değil', '2026-07-13 08:22:13', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (28, 'Dell XPS', 'Hızlı Teslim', 12306.42, 'Var', 'Satışta Değil', '2026-07-13 08:22:13', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (29, 'Huawei MateBook', '256 GB Mavi', 5562.32, 'Yok', 'Satışta Değil', '2026-07-13 08:22:13', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (30, 'PlayStation 5', 'Premium Seri', 49367.23, 'Yok', 'Satışta', '2026-07-13 08:22:13', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (31, 'Anker PowerBank', '1 TB Gri', 78416.05, 'Var', 'Satışta Değil', '2026-07-13 08:22:13', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (32, 'AirPods Pro', 'Kutulu', 35710.62, 'Var', 'Satışta', '2026-07-13 08:22:13', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (33, 'GoPro Hero', '128 GB Siyah', 74744.37, 'Yok', 'Satışta', '2026-07-13 08:22:13', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (34, 'PlayStation 5', 'Hızlı Teslim', 98579.43, 'Yok', 'Satışta', '2026-07-13 08:22:13', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (35, 'Dell XPS', '256 GB Mavi', 91541.76, 'Var', 'Satışta', '2026-07-13 08:22:13', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (36, 'Bose QC Ultra', 'Faturalı', 40172.53, 'Var', 'Satışta', '2026-07-13 08:22:13', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (37, 'Meta Quest 3', 'Premium Seri', 20449.62, 'Yok', 'Satışta', '2026-07-13 08:22:13', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (38, 'Asus ROG', '1 TB Gri', 31309.08, 'Yok', 'Satışta', '2026-07-13 08:22:13', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (39, 'HP Victus', 'İkinci El Temiz', 57341.41, 'Var', 'Satışta', '2026-07-13 08:22:13', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (40, 'Apple Watch', '512 GB Beyaz', 93859.03, 'Yok', 'Satışta Değil', '2026-07-13 08:22:13', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (41, 'MSI Katana', 'Sıfır Ürün', 61542.16, 'Yok', 'Satışta', '2026-07-13 08:22:13', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (42, 'Dell XPS', 'Hızlı Teslim', 26705.20, 'Var', 'Satışta Değil', '2026-07-13 08:22:13', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (43, 'Canon EOS R50', '256 GB Mavi', 20780.95, 'Var', 'Satışta', '2026-07-13 08:22:13', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (44, 'Huawei MateBook', 'Hızlı Teslim', 81026.75, 'Yok', 'Satışta', '2026-07-13 08:22:13', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (45, 'Samsung Galaxy S25', 'Kutulu', 8122.09, 'Yok', 'Satışta', '2026-07-13 08:22:13', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (46, 'Canon EOS R50', 'Garantili', 51108.93, 'Yok', 'Satışta Değil', '2026-07-13 08:22:13', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (47, 'iPad Air', 'Garantili', 79219.62, 'Var', 'Satışta', '2026-07-13 08:22:13', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (48, 'Nintendo Switch', 'Premium Seri', 88154.75, 'Var', 'Satışta', '2026-07-13 08:22:13', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (49, 'Bose QC Ultra', 'Yeni Model', 54216.31, 'Var', 'Satışta', '2026-07-13 08:22:13', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (50, 'JBL Charge', 'Yeni Model', 44771.69, 'Var', 'Satışta', '2026-07-13 08:22:13', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (51, 'Meta Quest 3', '256 GB Mavi', 16761.00, 'Yok', 'Satışta Değil', '2026-07-13 08:22:13', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (52, 'Lenovo ThinkPad', 'Yeni Model', 57198.27, 'Yok', 'Satışta', '2026-07-13 08:22:13', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (53, 'PlayStation 5', 'Faturalı', 61046.61, 'Yok', 'Satışta', '2026-07-13 08:22:13', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (54, 'Nintendo Switch', '128 GB Siyah', 17669.44, 'Var', 'Satışta', '2026-07-13 08:22:13', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (55, 'Kindle Paperwhite', 'Hızlı Teslim', 72880.83, 'Yok', 'Satışta Değil', '2026-07-13 08:22:13', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (56, 'SteelSeries Apex', 'Kutulu', 11314.97, 'Yok', 'Satışta Değil', '2026-07-13 08:22:13', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (57, 'JBL Charge', '1 TB Gri', 17032.90, 'Yok', 'Satışta', '2026-07-13 08:22:13', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (58, 'AirPods Pro', 'Yeni Model', 95655.71, 'Yok', 'Satışta', '2026-07-13 08:22:14', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (59, 'MacBook Pro', 'Sıfır Ürün', 46568.78, 'Var', 'Satışta', '2026-07-13 08:22:14', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (60, 'Sony WH-1000XM5', 'Faturalı', 88068.93, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (61, 'Xiaomi Redmi', 'Garantili', 82245.51, 'Var', 'Satışta', '2026-07-13 08:22:14', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (62, 'MSI Katana', '512 GB Beyaz', 22793.23, 'Var', 'Satışta', '2026-07-13 08:22:14', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (63, 'GoPro Hero', '1 TB Gri', 18176.55, 'Var', 'Satışta', '2026-07-13 08:22:14', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (64, 'MacBook Pro', '512 GB Beyaz', 91130.35, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (65, 'Xiaomi Redmi', 'Yeni Model', 14748.43, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (66, 'Razer Blade', '512 GB Beyaz', 65812.75, 'Var', 'Satışta', '2026-07-13 08:22:14', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (67, 'SteelSeries Apex', 'İkinci El Temiz', 16862.33, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (68, 'PlayStation 5', 'Sıfır Ürün', 20801.99, 'Yok', 'Satışta', '2026-07-13 08:22:14', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (69, 'SteelSeries Apex', 'Sıfır Ürün', 25621.92, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (70, 'iPhone 16', 'İkinci El Temiz', 72040.80, 'Yok', 'Satışta', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (71, 'Razer Blade', '256 GB Mavi', 85195.70, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (72, 'AirPods Pro', 'Sıfır Ürün', 64255.64, 'Yok', 'Satışta', '2026-07-13 08:22:14', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (73, 'Sony WH-1000XM5', 'Sıfır Ürün', 10393.68, 'Var', 'Satışta', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (74, 'Dell XPS', 'Yeni Model', 59730.23, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (75, 'iPhone 16', 'Kutulu', 45008.92, 'Yok', 'Satışta', '2026-07-13 08:22:14', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (76, 'Meta Quest 3', 'Hızlı Teslim', 11400.29, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (77, 'LG UltraGear', '128 GB Siyah', 25411.36, 'Yok', 'Satışta', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (78, 'Huawei MateBook', 'Yeni Model', 52595.76, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (79, 'Surface Laptop', 'Kutulu', 92589.13, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (80, 'MSI Katana', 'Garantili', 8663.79, 'Var', 'Satışta', '2026-07-13 08:22:14', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (81, 'Lenovo ThinkPad', '1 TB Gri', 6055.76, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (82, 'Lenovo ThinkPad', 'Kutulu', 27455.21, 'Var', 'Satışta', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (83, 'Huawei MateBook', 'Faturalı', 48369.82, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (84, 'MSI Katana', '1 TB Gri', 86157.73, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (85, 'SteelSeries Apex', 'Yeni Model', 65299.61, 'Yok', 'Satışta', '2026-07-13 08:22:14', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (86, 'SteelSeries Apex', '1 TB Gri', 63332.15, 'Yok', 'Satışta', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (87, 'Anker PowerBank', '128 GB Siyah', 80950.52, 'Var', 'Satışta', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (88, 'HP Victus', '128 GB Siyah', 10212.02, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (89, 'Apple Watch', 'Yeni Model', 97264.41, 'Yok', 'Satışta', '2026-07-13 08:22:14', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (90, 'Nintendo Switch', 'Yeni Model', 34694.86, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (91, 'Apple Watch', 'İkinci El Temiz', 10643.17, 'Yok', 'Satışta', '2026-07-13 08:22:14', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (92, 'AirPods Pro', 'Yeni Model', 61249.55, 'Var', 'Satışta', '2026-07-13 08:22:14', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (93, 'AirPods Pro', 'Hızlı Teslim', 17970.09, 'Var', 'Satışta', '2026-07-13 08:22:14', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (94, 'MacBook Pro', '512 GB Beyaz', 81124.69, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (95, 'MSI Katana', 'Sıfır Ürün', 11916.91, 'Yok', 'Satışta', '2026-07-13 08:22:14', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (96, 'Logitech MX Master', 'Kutulu', 75811.18, 'Var', 'Satışta', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (97, 'JBL Charge', '128 GB Siyah', 29046.09, 'Yok', 'Satışta', '2026-07-13 08:22:14', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (98, 'GoPro Hero', 'Faturalı', 10931.19, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (99, 'GoPro Hero', 'Hızlı Teslim', 1802.16, 'Var', 'Satışta', '2026-07-13 08:22:14', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (100, 'Xiaomi Redmi', 'Sıfır Ürün', 8657.09, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (101, 'Surface Laptop', 'İkinci El Temiz', 46285.31, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (102, 'Apple Watch', 'Kutulu', 8400.33, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (103, 'Nintendo Switch', 'İkinci El Temiz', 65604.29, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (104, 'Huawei MateBook', 'Hızlı Teslim', 7361.29, 'Var', 'Satışta', '2026-07-13 08:22:14', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (105, 'MSI Katana', 'Premium Seri', 85908.25, 'Var', 'Satışta', '2026-07-13 08:22:14', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (106, 'MacBook Pro', 'İkinci El Temiz', 53382.04, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (107, 'Garmin Fenix', 'Faturalı', 68187.74, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (108, 'Dell XPS', 'Kutulu', 45721.24, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (109, 'MacBook Pro', 'Hızlı Teslim', 6262.39, 'Yok', 'Satışta', '2026-07-13 08:22:14', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (110, 'MSI Katana', '256 GB Mavi', 37941.18, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (111, 'Sony WH-1000XM5', 'Premium Seri', 34711.58, 'Var', 'Satışta', '2026-07-13 08:22:14', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (112, 'GoPro Hero', 'Garantili', 17985.01, 'Yok', 'Satışta', '2026-07-13 08:22:14', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (113, 'MacBook Pro', 'Sıfır Ürün', 35088.32, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (114, 'Kindle Paperwhite', 'Premium Seri', 19874.82, 'Yok', 'Satışta', '2026-07-13 08:22:14', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (115, 'Meta Quest 3', 'Hızlı Teslim', 56791.81, 'Var', 'Satışta', '2026-07-13 08:22:14', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (116, 'iPad Air', 'Hızlı Teslim', 88282.05, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (117, 'Surface Laptop', 'Sıfır Ürün', 80926.05, 'Yok', 'Satışta', '2026-07-13 08:22:14', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (118, 'Samsung Galaxy S25', '128 GB Siyah', 31521.23, 'Var', 'Satışta', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (119, 'MacBook Pro', 'İkinci El Temiz', 97329.42, 'Yok', 'Satışta', '2026-07-13 08:22:14', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (120, 'Asus ROG', 'Sıfır Ürün', 68295.11, 'Var', 'Satışta', '2026-07-13 08:22:14', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (121, 'Sony WH-1000XM5', '1 TB Gri', 60385.94, 'Yok', 'Satışta', '2026-07-13 08:22:14', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (122, 'iPad Air', '128 GB Siyah', 48734.04, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (123, 'HP Victus', 'Yeni Model', 99910.34, 'Yok', 'Satışta', '2026-07-13 08:22:14', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (124, 'GoPro Hero', 'Premium Seri', 60436.55, 'Yok', 'Satışta', '2026-07-13 08:22:14', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (125, 'LG UltraGear', 'Kutulu', 48701.69, 'Yok', 'Satışta', '2026-07-13 08:22:14', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (126, 'Samsung Galaxy S25', 'Sıfır Ürün', 89300.44, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (127, 'JBL Charge', '128 GB Siyah', 94071.68, 'Yok', 'Satışta', '2026-07-13 08:22:14', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (128, 'Samsung Galaxy S25', 'Garantili', 47732.27, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (129, 'Canon EOS R50', 'Yeni Model', 66425.69, 'Yok', 'Satışta', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (130, 'MacBook Pro', 'İkinci El Temiz', 9617.60, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (131, 'MacBook Pro', 'Yeni Model', 21368.48, 'Var', 'Satışta', '2026-07-13 08:22:14', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (132, 'Kindle Paperwhite', '128 GB Siyah', 94003.95, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (133, 'AirPods Pro', 'Sıfır Ürün', 9582.59, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (134, 'iPad Air', 'Premium Seri', 52867.81, 'Var', 'Satışta', '2026-07-13 08:22:14', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (135, 'Garmin Fenix', 'Hızlı Teslim', 60085.13, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (136, 'Bose QC Ultra', '128 GB Siyah', 13593.38, 'Var', 'Satışta', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (137, 'iPhone 16', 'Sıfır Ürün', 2030.18, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (138, 'Sony WH-1000XM5', '256 GB Mavi', 36942.75, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (139, 'Canon EOS R50', 'Premium Seri', 1436.08, 'Yok', 'Satışta', '2026-07-13 08:22:14', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (140, 'PlayStation 5', 'Sıfır Ürün', 62735.91, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (141, 'JBL Charge', 'Kutulu', 34428.54, 'Var', 'Satışta', '2026-07-13 08:22:14', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (142, 'Canon EOS R50', '256 GB Mavi', 90197.97, 'Var', 'Satışta', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (143, 'Garmin Fenix', 'İkinci El Temiz', 53932.75, 'Yok', 'Satışta', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (144, 'Asus ROG', 'Kutulu', 56295.91, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (145, 'Apple Watch', 'Premium Seri', 57100.39, 'Yok', 'Satışta', '2026-07-13 08:22:14', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (146, 'Lenovo ThinkPad', 'Premium Seri', 43291.77, 'Yok', 'Satışta', '2026-07-13 08:22:14', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (147, 'Huawei MateBook', 'Faturalı', 57535.33, 'Var', 'Satışta', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (148, 'PlayStation 5', 'Faturalı', 90410.59, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (149, 'Canon EOS R50', '1 TB Gri', 95990.29, 'Yok', 'Satışta', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (150, 'Dell XPS', 'Kutulu', 32100.74, 'Var', 'Satışta', '2026-07-13 08:22:14', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (151, 'LG UltraGear', 'Garantili', 60337.65, 'Var', 'Satışta', '2026-07-13 08:22:14', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (152, 'Garmin Fenix', 'Faturalı', 82709.23, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (153, 'Razer Blade', 'Garantili', 31374.26, 'Yok', 'Satışta', '2026-07-13 08:22:14', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (154, 'Lenovo ThinkPad', 'Faturalı', 26397.69, 'Var', 'Satışta', '2026-07-13 08:22:14', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (155, 'AirPods Pro', 'Hızlı Teslim', 97840.53, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (156, 'AirPods Pro', 'Garantili', 9751.95, 'Yok', 'Satışta', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (157, 'AirPods Pro', 'Kutulu', 67774.81, 'Var', 'Satışta', '2026-07-13 08:22:14', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (158, 'iPhone 16', '128 GB Siyah', 55119.22, 'Var', 'Satışta', '2026-07-13 08:22:14', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (159, 'Surface Laptop', 'Hızlı Teslim', 50909.33, 'Var', 'Satışta', '2026-07-13 08:22:14', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (160, 'PlayStation 5', '512 GB Beyaz', 39591.51, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (161, 'LG UltraGear', 'Sıfır Ürün', 64193.95, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (162, 'GoPro Hero', 'İkinci El Temiz', 1505.52, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (163, 'Bose QC Ultra', 'Garantili', 87476.17, 'Yok', 'Satışta', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (164, 'Apple Watch', 'Yeni Model', 3183.82, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (165, 'Bose QC Ultra', 'Kutulu', 46742.60, 'Yok', 'Satışta', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (166, 'Anker PowerBank', 'Sıfır Ürün', 83223.68, 'Yok', 'Satışta', '2026-07-13 08:22:14', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (167, 'Xiaomi Redmi', '128 GB Siyah', 84599.04, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (168, 'JBL Charge', '512 GB Beyaz', 53608.33, 'Var', 'Satışta', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (169, 'MacBook Pro', 'Faturalı', 33437.46, 'Yok', 'Satışta', '2026-07-13 08:22:14', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (170, 'Surface Laptop', '512 GB Beyaz', 81624.59, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (171, 'iPhone 16', 'Sıfır Ürün', 83731.37, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (172, 'Lenovo ThinkPad', 'Faturalı', 59494.01, 'Var', 'Satışta', '2026-07-13 08:22:14', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (173, 'PlayStation 5', 'Kutulu', 76584.03, 'Var', 'Satışta', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (174, 'MacBook Pro', '1 TB Gri', 15983.15, 'Var', 'Satışta', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (175, 'Lenovo ThinkPad', 'İkinci El Temiz', 7429.65, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (176, 'Surface Laptop', '512 GB Beyaz', 26380.44, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (177, 'SteelSeries Apex', 'İkinci El Temiz', 8661.75, 'Var', 'Satışta', '2026-07-13 08:22:14', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (178, 'LG UltraGear', 'Yeni Model', 45815.36, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (179, 'JBL Charge', 'Garantili', 73593.59, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (180, 'LG UltraGear', 'Premium Seri', 11690.89, 'Yok', 'Satışta', '2026-07-13 08:22:14', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (181, 'Xiaomi Redmi', '128 GB Siyah', 19931.50, 'Var', 'Satışta', '2026-07-13 08:22:14', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (182, 'PlayStation 5', 'Garantili', 39323.44, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (183, 'Apple Watch', '1 TB Gri', 34268.11, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (184, 'JBL Charge', '128 GB Siyah', 46203.03, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (185, 'Surface Laptop', '512 GB Beyaz', 34925.92, 'Yok', 'Satışta', '2026-07-13 08:22:14', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (186, 'PlayStation 5', 'Sıfır Ürün', 82487.48, 'Yok', 'Satışta', '2026-07-13 08:22:14', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (187, 'Kindle Paperwhite', '256 GB Mavi', 79150.89, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (188, 'MacBook Pro', 'Sıfır Ürün', 70949.78, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (189, 'iPad Air', '128 GB Siyah', 49176.66, 'Var', 'Satışta', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (190, 'Sony WH-1000XM5', 'Kutulu', 81954.86, 'Var', 'Satışta', '2026-07-13 08:22:14', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (191, 'Xiaomi Redmi', 'Kutulu', 26550.28, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (192, 'Huawei MateBook', 'Garantili', 32799.31, 'Yok', 'Satışta', '2026-07-13 08:22:14', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (193, 'Asus ROG', 'Kutulu', 71328.88, 'Yok', 'Satışta', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (194, 'Huawei MateBook', 'Kutulu', 58430.14, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (195, 'Apple Watch', 'Faturalı', 18768.68, 'Yok', 'Satışta', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (196, 'iPad Air', 'Yeni Model', 96439.79, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (197, 'JBL Charge', 'Hızlı Teslim', 29766.37, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (198, 'Lenovo ThinkPad', '128 GB Siyah', 61949.75, 'Var', 'Satışta', '2026-07-13 08:22:14', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (199, 'HP Victus', '256 GB Mavi', 63154.81, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (200, 'Logitech MX Master', 'Sıfır Ürün', 63809.10, 'Var', 'Satışta', '2026-07-13 08:22:14', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (201, 'Bose QC Ultra', '512 GB Beyaz', 52874.04, 'Var', 'Satışta', '2026-07-13 08:22:14', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (202, 'PlayStation 5', '512 GB Beyaz', 63140.40, 'Yok', 'Satışta', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (203, 'AirPods Pro', 'Premium Seri', 40514.43, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (204, 'HP Victus', 'Faturalı', 58577.92, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (205, 'AirPods Pro', 'Sıfır Ürün', 12389.13, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (206, 'Logitech MX Master', 'Yeni Model', 70588.25, 'Var', 'Satışta', '2026-07-13 08:22:14', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (207, 'iPad Air', 'Hızlı Teslim', 66527.28, 'Yok', 'Satışta', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (208, 'LG UltraGear', 'Yeni Model', 20483.70, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (209, 'Huawei MateBook', 'Yeni Model', 87943.81, 'Var', 'Satışta', '2026-07-13 08:22:14', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (210, 'iPhone 16', 'Premium Seri', 41615.95, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (211, 'SteelSeries Apex', '1 TB Gri', 29555.69, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (212, 'Dell XPS', 'Garantili', 94927.26, 'Yok', 'Satışta', '2026-07-13 08:22:14', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (213, 'MSI Katana', 'Sıfır Ürün', 54754.48, 'Var', 'Satışta', '2026-07-13 08:22:14', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (214, 'LG UltraGear', '128 GB Siyah', 11495.68, 'Var', 'Satışta', '2026-07-13 08:22:14', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (215, 'AirPods Pro', 'Hızlı Teslim', 75928.74, 'Var', 'Satışta', '2026-07-13 08:22:14', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (216, 'Lenovo ThinkPad', 'Garantili', 85174.70, 'Var', 'Satışta', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (217, 'JBL Charge', 'Faturalı', 38537.77, 'Yok', 'Satışta', '2026-07-13 08:22:14', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (218, 'Lenovo ThinkPad', 'Faturalı', 28118.75, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (219, 'Anker PowerBank', 'Faturalı', 56522.97, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (220, 'Razer Blade', 'Sıfır Ürün', 83434.13, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (221, 'iPad Air', '128 GB Siyah', 51621.01, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (222, 'Nintendo Switch', 'Faturalı', 72760.63, 'Yok', 'Satışta', '2026-07-13 08:22:14', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (223, 'PlayStation 5', '512 GB Beyaz', 17839.62, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (224, 'Huawei MateBook', 'Yeni Model', 98898.93, 'Yok', 'Satışta', '2026-07-13 08:22:14', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (225, 'PlayStation 5', '256 GB Mavi', 53809.91, 'Var', 'Satışta', '2026-07-13 08:22:14', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (226, 'iPhone 16', 'Sıfır Ürün', 46150.43, 'Yok', 'Satışta', '2026-07-13 08:22:14', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (227, 'MacBook Pro', 'Faturalı', 35063.94, 'Yok', 'Satışta', '2026-07-13 08:22:14', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (228, 'Garmin Fenix', 'Kutulu', 81948.36, 'Yok', 'Satışta', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (229, 'Acer Nitro', 'Kutulu', 68889.97, 'Var', 'Satışta', '2026-07-13 08:22:14', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (230, 'Surface Laptop', 'Yeni Model', 82419.81, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (231, 'Lenovo ThinkPad', '1 TB Gri', 58943.98, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (232, 'Nintendo Switch', '512 GB Beyaz', 53393.55, 'Var', 'Satışta', '2026-07-13 08:22:14', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (233, 'Anker PowerBank', '256 GB Mavi', 27193.04, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (234, 'Dell XPS', '1 TB Gri', 76541.71, 'Yok', 'Satışta', '2026-07-13 08:22:14', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (235, 'Dell XPS', 'Sıfır Ürün', 3459.39, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (236, 'MacBook Pro', '256 GB Mavi', 22310.80, 'Yok', 'Satışta', '2026-07-13 08:22:14', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (237, 'Sony WH-1000XM5', 'Faturalı', 95100.02, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (238, 'MSI Katana', '128 GB Siyah', 52488.48, 'Var', 'Satışta', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (239, 'Asus ROG', '512 GB Beyaz', 90521.63, 'Yok', 'Satışta', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (240, 'MSI Katana', 'Kutulu', 45007.23, 'Var', 'Satışta', '2026-07-13 08:22:14', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (241, 'SteelSeries Apex', 'Sıfır Ürün', 71396.18, 'Yok', 'Satışta', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (242, 'Dell XPS', 'İkinci El Temiz', 99067.96, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (243, 'SteelSeries Apex', 'Yeni Model', 31654.82, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (244, 'iPhone 16', 'Kutulu', 23946.16, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (245, 'Garmin Fenix', 'Hızlı Teslim', 16561.43, 'Yok', 'Satışta Değil', '2026-07-13 08:22:14', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (246, 'Samsung Galaxy S25', 'Sıfır Ürün', 14327.52, 'Yok', 'Satışta', '2026-07-13 08:22:14', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (247, 'Apple Watch', 'Yeni Model', 1487.26, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (248, 'HP Victus', 'Premium Seri', 36855.82, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (249, 'Huawei MateBook', '256 GB Mavi', 22482.43, 'Var', 'Satışta Değil', '2026-07-13 08:22:14', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (250, 'Asus ROG', '128 GB Siyah', 44291.96, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (251, 'Surface Laptop', 'Garantili', 47061.08, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (252, 'MSI Katana', 'Faturalı', 21975.89, 'Yok', 'Satışta', '2026-07-13 08:22:15', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (253, 'Surface Laptop', '128 GB Siyah', 22882.44, 'Yok', 'Satışta', '2026-07-13 08:22:15', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (254, 'PlayStation 5', 'Hızlı Teslim', 78938.46, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (255, 'HP Victus', 'Faturalı', 25368.38, 'Yok', 'Satışta', '2026-07-13 08:22:15', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (256, 'GoPro Hero', '512 GB Beyaz', 54267.93, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (257, 'Kindle Paperwhite', 'Hızlı Teslim', 33569.78, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (258, 'LG UltraGear', 'Garantili', 16861.28, 'Var', 'Satışta', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (259, 'Xiaomi Redmi', 'İkinci El Temiz', 65661.52, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (260, 'Razer Blade', '1 TB Gri', 78211.88, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (261, 'Lenovo ThinkPad', '512 GB Beyaz', 63709.92, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (262, 'MSI Katana', 'Yeni Model', 55159.51, 'Var', 'Satışta', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (263, 'Razer Blade', '512 GB Beyaz', 34923.10, 'Yok', 'Satışta', '2026-07-13 08:22:15', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (264, 'Huawei MateBook', 'Premium Seri', 28641.76, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (265, 'PlayStation 5', 'Sıfır Ürün', 83751.41, 'Var', 'Satışta', '2026-07-13 08:22:15', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (266, 'Huawei MateBook', 'Garantili', 84815.33, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (267, 'Surface Laptop', 'Yeni Model', 19049.17, 'Var', 'Satışta', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (268, 'Bose QC Ultra', 'Faturalı', 91827.89, 'Var', 'Satışta', '2026-07-13 08:22:15', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (269, 'Dell XPS', 'Garantili', 27303.92, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (270, 'Logitech MX Master', 'Yeni Model', 6234.01, 'Yok', 'Satışta', '2026-07-13 08:22:15', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (271, 'SteelSeries Apex', 'İkinci El Temiz', 4847.85, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (272, 'LG UltraGear', '512 GB Beyaz', 8945.00, 'Var', 'Satışta', '2026-07-13 08:22:15', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (273, 'Acer Nitro', 'Faturalı', 50449.29, 'Yok', 'Satışta', '2026-07-13 08:22:15', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (274, 'Kindle Paperwhite', 'Faturalı', 98777.44, 'Var', 'Satışta', '2026-07-13 08:22:15', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (275, 'Kindle Paperwhite', 'Kutulu', 44030.24, 'Var', 'Satışta', '2026-07-13 08:22:15', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (276, 'Bose QC Ultra', '256 GB Mavi', 82436.48, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (277, 'Xiaomi Redmi', 'Yeni Model', 69983.47, 'Yok', 'Satışta', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (278, 'Sony WH-1000XM5', 'Sıfır Ürün', 94022.24, 'Var', 'Satışta', '2026-07-13 08:22:15', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (279, 'Logitech MX Master', 'Premium Seri', 73784.19, 'Var', 'Satışta', '2026-07-13 08:22:15', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (280, 'HP Victus', 'Garantili', 85545.14, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (281, 'Surface Laptop', '1 TB Gri', 92735.95, 'Yok', 'Satışta', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (282, 'iPhone 16', '512 GB Beyaz', 70297.10, 'Yok', 'Satışta', '2026-07-13 08:22:15', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (283, 'HP Victus', 'Yeni Model', 25413.20, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (284, 'iPhone 16', '512 GB Beyaz', 97828.61, 'Yok', 'Satışta', '2026-07-13 08:22:15', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (285, 'Apple Watch', 'Premium Seri', 36123.37, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (286, 'Canon EOS R50', '256 GB Mavi', 42276.93, 'Yok', 'Satışta', '2026-07-13 08:22:15', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (287, 'Razer Blade', 'Kutulu', 67468.00, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (288, 'Garmin Fenix', '1 TB Gri', 48629.51, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (289, 'iPhone 16', 'Garantili', 20474.42, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (290, 'Anker PowerBank', 'Premium Seri', 51027.61, 'Var', 'Satışta', '2026-07-13 08:22:15', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (291, 'Surface Laptop', 'Yeni Model', 6056.32, 'Var', 'Satışta', '2026-07-13 08:22:15', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (292, 'LG UltraGear', 'Hızlı Teslim', 76837.01, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (293, 'AirPods Pro', 'Kutulu', 69275.52, 'Yok', 'Satışta', '2026-07-13 08:22:15', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (294, 'Anker PowerBank', 'Sıfır Ürün', 32576.59, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (295, 'AirPods Pro', 'Premium Seri', 88225.60, 'Var', 'Satışta', '2026-07-13 08:22:15', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (296, 'AirPods Pro', 'İkinci El Temiz', 88309.56, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (297, 'JBL Charge', '512 GB Beyaz', 43334.14, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (298, 'Asus ROG', 'Sıfır Ürün', 1442.83, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (299, 'Razer Blade', '1 TB Gri', 59141.38, 'Var', 'Satışta', '2026-07-13 08:22:15', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (300, 'Xiaomi Redmi', 'İkinci El Temiz', 70705.41, 'Yok', 'Satışta', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (301, 'Nintendo Switch', '512 GB Beyaz', 89619.62, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (302, 'Samsung Galaxy S25', 'Faturalı', 54690.06, 'Yok', 'Satışta', '2026-07-13 08:22:15', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (303, 'Logitech MX Master', 'Sıfır Ürün', 21595.15, 'Var', 'Satışta', '2026-07-13 08:22:15', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (304, 'Huawei MateBook', 'Yeni Model', 60164.52, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (305, 'Kindle Paperwhite', 'Kutulu', 51649.99, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (306, 'Surface Laptop', '128 GB Siyah', 50022.92, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (307, 'iPhone 16', 'Kutulu', 77561.03, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (308, 'HP Victus', 'Garantili', 13472.30, 'Var', 'Satışta', '2026-07-13 08:22:15', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (309, 'HP Victus', 'Faturalı', 9724.79, 'Var', 'Satışta', '2026-07-13 08:22:15', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (310, 'MSI Katana', 'Yeni Model', 93880.91, 'Yok', 'Satışta', '2026-07-13 08:22:15', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (311, 'MSI Katana', '512 GB Beyaz', 36861.56, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (312, 'Sony WH-1000XM5', 'Garantili', 73701.95, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (313, 'Samsung Galaxy S25', 'Yeni Model', 30904.22, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (314, 'iPhone 16', '128 GB Siyah', 61649.91, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (315, 'GoPro Hero', 'Garantili', 66465.50, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (316, 'Bose QC Ultra', '128 GB Siyah', 51116.68, 'Var', 'Satışta', '2026-07-13 08:22:15', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (317, 'Dell XPS', 'Premium Seri', 57921.38, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (318, 'Xiaomi Redmi', '256 GB Mavi', 6501.79, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (319, 'Nintendo Switch', '256 GB Mavi', 66207.13, 'Yok', 'Satışta', '2026-07-13 08:22:15', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (320, 'Xiaomi Redmi', '256 GB Mavi', 31355.70, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (321, 'Surface Laptop', '128 GB Siyah', 99833.61, 'Yok', 'Satışta', '2026-07-13 08:22:15', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (322, 'JBL Charge', 'Premium Seri', 35318.83, 'Var', 'Satışta', '2026-07-13 08:22:15', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (323, 'Surface Laptop', '1 TB Gri', 8740.52, 'Yok', 'Satışta', '2026-07-13 08:22:15', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (324, 'iPhone 16', '256 GB Mavi', 72027.48, 'Yok', 'Satışta', '2026-07-13 08:22:15', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (325, 'PlayStation 5', '1 TB Gri', 52109.58, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (326, 'LG UltraGear', 'Yeni Model', 91730.26, 'Yok', 'Satışta', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (327, 'Logitech MX Master', 'Kutulu', 33897.05, 'Yok', 'Satışta', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (328, 'Logitech MX Master', 'Hızlı Teslim', 9237.19, 'Var', 'Satışta', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (329, 'Xiaomi Redmi', '256 GB Mavi', 53919.16, 'Var', 'Satışta', '2026-07-13 08:22:15', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (330, 'Huawei MateBook', '256 GB Mavi', 42314.24, 'Yok', 'Satışta', '2026-07-13 08:22:15', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (331, 'iPad Air', '128 GB Siyah', 45420.66, 'Var', 'Satışta', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (332, 'Anker PowerBank', '256 GB Mavi', 19382.61, 'Yok', 'Satışta', '2026-07-13 08:22:15', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (333, 'SteelSeries Apex', '512 GB Beyaz', 13186.71, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (334, 'Meta Quest 3', '512 GB Beyaz', 83491.07, 'Yok', 'Satışta', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (335, 'Kindle Paperwhite', 'İkinci El Temiz', 14038.02, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (336, 'AirPods Pro', 'İkinci El Temiz', 35926.10, 'Var', 'Satışta', '2026-07-13 08:22:15', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (337, 'iPhone 16', '1 TB Gri', 60401.10, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (338, 'MacBook Pro', '1 TB Gri', 69685.26, 'Yok', 'Satışta', '2026-07-13 08:22:15', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (339, 'Bose QC Ultra', 'Yeni Model', 39255.81, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (340, 'Apple Watch', 'Garantili', 56615.53, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (341, 'Bose QC Ultra', 'Sıfır Ürün', 90605.58, 'Yok', 'Satışta', '2026-07-13 08:22:15', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (342, 'Meta Quest 3', '1 TB Gri', 44372.53, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (343, 'MacBook Pro', 'İkinci El Temiz', 47165.44, 'Yok', 'Satışta', '2026-07-13 08:22:15', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (344, 'GoPro Hero', 'Kutulu', 14077.08, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (345, 'JBL Charge', 'İkinci El Temiz', 12774.09, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (346, 'LG UltraGear', 'Premium Seri', 54076.61, 'Yok', 'Satışta', '2026-07-13 08:22:15', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (347, 'JBL Charge', 'Sıfır Ürün', 58228.26, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (348, 'Xiaomi Redmi', 'Hızlı Teslim', 83464.14, 'Var', 'Satışta', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (349, 'iPhone 16', 'Yeni Model', 87784.89, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (350, 'AirPods Pro', 'Sıfır Ürün', 30065.50, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (351, 'JBL Charge', 'Sıfır Ürün', 23073.36, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (352, 'HP Victus', '256 GB Mavi', 82993.94, 'Var', 'Satışta', '2026-07-13 08:22:15', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (353, 'SteelSeries Apex', '1 TB Gri', 14096.37, 'Yok', 'Satışta', '2026-07-13 08:22:15', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (354, 'iPad Air', '1 TB Gri', 89618.81, 'Yok', 'Satışta', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (355, 'MSI Katana', 'Premium Seri', 62485.71, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (356, 'Huawei MateBook', '1 TB Gri', 87188.94, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (357, 'iPhone 16', 'Sıfır Ürün', 75432.49, 'Var', 'Satışta', '2026-07-13 08:22:15', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (358, 'Garmin Fenix', '256 GB Mavi', 55805.61, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (359, 'HP Victus', 'Premium Seri', 4422.21, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (360, 'iPad Air', '256 GB Mavi', 6476.55, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (361, 'MSI Katana', 'Garantili', 99034.47, 'Var', 'Satışta', '2026-07-13 08:22:15', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (362, 'JBL Charge', 'Premium Seri', 5447.41, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (363, 'MacBook Pro', '256 GB Mavi', 99934.39, 'Var', 'Satışta', '2026-07-13 08:22:15', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (364, 'Acer Nitro', 'Faturalı', 6058.34, 'Var', 'Satışta', '2026-07-13 08:22:15', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (365, 'Dell XPS', 'Yeni Model', 26703.01, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (366, 'Razer Blade', 'Garantili', 1560.51, 'Yok', 'Satışta', '2026-07-13 08:22:15', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (367, 'Bose QC Ultra', 'İkinci El Temiz', 70835.48, 'Yok', 'Satışta', '2026-07-13 08:22:15', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (368, 'iPad Air', 'Garantili', 42546.30, 'Var', 'Satışta', '2026-07-13 08:22:15', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (369, 'Kindle Paperwhite', 'Yeni Model', 66747.93, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (370, 'Nintendo Switch', 'Yeni Model', 73775.85, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (371, 'Asus ROG', 'Premium Seri', 29411.57, 'Var', 'Satışta', '2026-07-13 08:22:15', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (372, 'iPhone 16', 'Faturalı', 50431.51, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (373, 'SteelSeries Apex', 'Hızlı Teslim', 92159.54, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (374, 'Bose QC Ultra', 'Premium Seri', 41283.55, 'Yok', 'Satışta', '2026-07-13 08:22:15', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (375, 'GoPro Hero', '256 GB Mavi', 46784.77, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (376, 'Canon EOS R50', '128 GB Siyah', 87449.77, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (377, 'MSI Katana', 'İkinci El Temiz', 63984.79, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (378, 'Logitech MX Master', 'Kutulu', 90168.61, 'Var', 'Satışta', '2026-07-13 08:22:15', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (379, 'Samsung Galaxy S25', '256 GB Mavi', 77890.94, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (380, 'Lenovo ThinkPad', '1 TB Gri', 26887.48, 'Var', 'Satışta', '2026-07-13 08:22:15', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (381, 'PlayStation 5', 'Garantili', 7094.94, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (382, 'Huawei MateBook', '256 GB Mavi', 74838.57, 'Yok', 'Satışta', '2026-07-13 08:22:15', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (383, 'Apple Watch', 'İkinci El Temiz', 68668.91, 'Yok', 'Satışta', '2026-07-13 08:22:15', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (384, 'Xiaomi Redmi', '1 TB Gri', 88301.60, 'Yok', 'Satışta', '2026-07-13 08:22:15', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (385, 'Meta Quest 3', 'Sıfır Ürün', 74540.28, 'Var', 'Satışta', '2026-07-13 08:22:15', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (386, 'Logitech MX Master', '128 GB Siyah', 4945.61, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (387, 'iPhone 16', 'Garantili', 97170.47, 'Var', 'Satışta', '2026-07-13 08:22:15', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (388, 'Meta Quest 3', 'Premium Seri', 22179.75, 'Yok', 'Satışta', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (389, 'GoPro Hero', 'Yeni Model', 88340.16, 'Yok', 'Satışta', '2026-07-13 08:22:15', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (390, 'iPad Air', 'Sıfır Ürün', 56807.82, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (391, 'Acer Nitro', 'İkinci El Temiz', 49970.05, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (392, 'iPad Air', '128 GB Siyah', 61405.50, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (393, 'Nintendo Switch', 'Kutulu', 17505.52, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (394, 'GoPro Hero', '512 GB Beyaz', 28051.37, 'Yok', 'Satışta', '2026-07-13 08:22:15', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (395, 'PlayStation 5', 'Yeni Model', 58825.06, 'Yok', 'Satışta', '2026-07-13 08:22:15', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (396, 'Dell XPS', '512 GB Beyaz', 53241.69, 'Yok', 'Satışta', '2026-07-13 08:22:15', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (397, 'Xiaomi Redmi', 'Sıfır Ürün', 11123.75, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (398, 'Logitech MX Master', 'Premium Seri', 91984.55, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (399, 'Anker PowerBank', 'Premium Seri', 78171.92, 'Var', 'Satışta', '2026-07-13 08:22:15', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (400, 'Nintendo Switch', 'Sıfır Ürün', 61273.14, 'Var', 'Satışta', '2026-07-13 08:22:15', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (401, 'Xiaomi Redmi', 'Sıfır Ürün', 15763.45, 'Var', 'Satışta', '2026-07-13 08:22:15', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (402, 'Canon EOS R50', '1 TB Gri', 95235.08, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (403, 'iPad Air', 'Yeni Model', 72255.47, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (404, 'Apple Watch', '1 TB Gri', 33333.17, 'Var', 'Satışta', '2026-07-13 08:22:15', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (405, 'Samsung Galaxy S25', 'İkinci El Temiz', 93052.47, 'Yok', 'Satışta', '2026-07-13 08:22:15', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (406, 'Sony WH-1000XM5', 'Hızlı Teslim', 77081.92, 'Var', 'Satışta', '2026-07-13 08:22:15', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (407, 'Surface Laptop', 'Premium Seri', 12479.85, 'Yok', 'Satışta', '2026-07-13 08:22:15', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (408, 'Lenovo ThinkPad', 'Hızlı Teslim', 43334.47, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (409, 'HP Victus', 'Kutulu', 68593.61, 'Yok', 'Satışta', '2026-07-13 08:22:15', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (410, 'Surface Laptop', 'Garantili', 80804.73, 'Var', 'Satışta', '2026-07-13 08:22:15', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (411, 'Razer Blade', '256 GB Mavi', 80840.40, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (412, 'iPhone 16', 'İkinci El Temiz', 85724.24, 'Var', 'Satışta', '2026-07-13 08:22:15', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (413, 'Razer Blade', '512 GB Beyaz', 57008.19, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (414, 'MacBook Pro', 'Yeni Model', 13706.05, 'Var', 'Satışta', '2026-07-13 08:22:15', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (415, 'Garmin Fenix', 'İkinci El Temiz', 22945.65, 'Var', 'Satışta', '2026-07-13 08:22:15', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (416, 'iPhone 16', 'Garantili', 66838.25, 'Yok', 'Satışta', '2026-07-13 08:22:15', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (417, 'Logitech MX Master', 'Hızlı Teslim', 98509.97, 'Var', 'Satışta', '2026-07-13 08:22:15', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (418, 'MSI Katana', '512 GB Beyaz', 91923.48, 'Var', 'Satışta', '2026-07-13 08:22:15', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (419, 'Asus ROG', 'Hızlı Teslim', 98194.29, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (420, 'MacBook Pro', 'Sıfır Ürün', 9589.60, 'Var', 'Satışta', '2026-07-13 08:22:15', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (421, 'iPhone 16', '1 TB Gri', 32697.40, 'Var', 'Satışta', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (422, 'Razer Blade', 'İkinci El Temiz', 12338.22, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (423, 'Garmin Fenix', 'Premium Seri', 48660.66, 'Var', 'Satışta', '2026-07-13 08:22:15', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (424, 'Acer Nitro', 'Garantili', 49330.30, 'Var', 'Satışta', '2026-07-13 08:22:15', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (425, 'Surface Laptop', 'Premium Seri', 90354.54, 'Yok', 'Satışta', '2026-07-13 08:22:15', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (426, 'iPad Air', 'Garantili', 86035.82, 'Var', 'Satışta', '2026-07-13 08:22:15', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (427, 'Meta Quest 3', '1 TB Gri', 15489.47, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (428, 'AirPods Pro', 'Premium Seri', 82846.04, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (429, 'Acer Nitro', 'Kutulu', 66960.71, 'Var', 'Satışta', '2026-07-13 08:22:15', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (430, 'JBL Charge', 'Yeni Model', 54886.72, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (431, 'SteelSeries Apex', '128 GB Siyah', 36818.63, 'Yok', 'Satışta', '2026-07-13 08:22:15', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (432, 'SteelSeries Apex', 'İkinci El Temiz', 89428.92, 'Var', 'Satışta', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (433, 'Logitech MX Master', 'Garantili', 71174.09, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (434, 'GoPro Hero', 'Sıfır Ürün', 65779.37, 'Var', 'Satışta', '2026-07-13 08:22:15', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (435, 'JBL Charge', 'Garantili', 41816.05, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (436, 'Logitech MX Master', 'Kutulu', 58412.80, 'Yok', 'Satışta', '2026-07-13 08:22:15', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (437, 'Lenovo ThinkPad', 'Yeni Model', 48313.20, 'Yok', 'Satışta', '2026-07-13 08:22:15', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (438, 'iPad Air', 'Faturalı', 2564.00, 'Yok', 'Satışta', '2026-07-13 08:22:15', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (439, 'Meta Quest 3', '128 GB Siyah', 59239.00, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (440, 'Surface Laptop', '512 GB Beyaz', 11354.34, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (441, 'Kindle Paperwhite', '128 GB Siyah', 79641.71, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (442, 'iPad Air', '128 GB Siyah', 63540.39, 'Var', 'Satışta', '2026-07-13 08:22:15', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (443, 'GoPro Hero', 'Garantili', 45593.10, 'Var', 'Satışta', '2026-07-13 08:22:15', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (444, 'Samsung Galaxy S25', 'Faturalı', 90790.68, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (445, 'MacBook Pro', 'Kutulu', 69492.21, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (446, 'Lenovo ThinkPad', 'İkinci El Temiz', 48068.39, 'Var', 'Satışta', '2026-07-13 08:22:15', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (447, 'GoPro Hero', 'Garantili', 3748.77, 'Yok', 'Satışta Değil', '2026-07-13 08:22:15', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (448, 'Garmin Fenix', 'Sıfır Ürün', 8269.70, 'Yok', 'Satışta', '2026-07-13 08:22:15', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (449, 'Dell XPS', '512 GB Beyaz', 29753.00, 'Yok', 'Satışta', '2026-07-13 08:22:15', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (450, 'Garmin Fenix', 'Garantili', 39051.74, 'Yok', 'Satışta', '2026-07-13 08:22:15', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (451, 'MSI Katana', 'Faturalı', 98467.44, 'Yok', 'Satışta', '2026-07-13 08:22:15', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (452, 'Dell XPS', 'Faturalı', 34503.85, 'Yok', 'Satışta', '2026-07-13 08:22:15', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (453, 'Dell XPS', 'Faturalı', 13855.12, 'Yok', 'Satışta', '2026-07-13 08:22:15', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (454, 'Asus ROG', '256 GB Mavi', 69708.64, 'Var', 'Satışta', '2026-07-13 08:22:15', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (455, 'MSI Katana', 'İkinci El Temiz', 1601.50, 'Var', 'Satışta', '2026-07-13 08:22:15', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (456, 'AirPods Pro', 'İkinci El Temiz', 87110.00, 'Var', 'Satışta Değil', '2026-07-13 08:22:15', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (457, 'iPad Air', 'İkinci El Temiz', 59015.44, 'Var', 'Satışta', '2026-07-13 08:22:15', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (458, 'Huawei MateBook', 'Garantili', 39556.27, 'Yok', 'Satışta', '2026-07-13 08:22:15', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (459, 'MSI Katana', 'Yeni Model', 36066.66, 'Yok', 'Satışta', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (460, 'Sony WH-1000XM5', 'İkinci El Temiz', 69126.66, 'Yok', 'Satışta', '2026-07-13 08:22:16', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (461, 'Xiaomi Redmi', 'Sıfır Ürün', 18475.49, 'Yok', 'Satışta', '2026-07-13 08:22:16', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (462, 'Samsung Galaxy S25', 'Hızlı Teslim', 94901.82, 'Yok', 'Satışta', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (463, 'Garmin Fenix', '1 TB Gri', 63577.84, 'Var', 'Satışta', '2026-07-13 08:22:16', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (464, 'Logitech MX Master', 'Sıfır Ürün', 14169.87, 'Var', 'Satışta', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (465, 'Dell XPS', 'Sıfır Ürün', 64320.34, 'Yok', 'Satışta', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (466, 'JBL Charge', '512 GB Beyaz', 26810.66, 'Yok', 'Satışta', '2026-07-13 08:22:16', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (467, 'Sony WH-1000XM5', 'Faturalı', 25357.97, 'Yok', 'Satışta', '2026-07-13 08:22:16', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (468, 'MacBook Pro', 'Sıfır Ürün', 53484.60, 'Yok', 'Satışta', '2026-07-13 08:22:16', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (469, 'HP Victus', '1 TB Gri', 52316.63, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (470, 'Lenovo ThinkPad', 'Yeni Model', 64381.87, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (471, 'iPad Air', '512 GB Beyaz', 67425.99, 'Var', 'Satışta', '2026-07-13 08:22:16', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (472, 'Razer Blade', 'Hızlı Teslim', 49697.19, 'Var', 'Satışta', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (473, 'LG UltraGear', 'Garantili', 41993.37, 'Var', 'Satışta', '2026-07-13 08:22:16', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (474, 'Surface Laptop', 'Kutulu', 9122.05, 'Yok', 'Satışta', '2026-07-13 08:22:16', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (475, 'Sony WH-1000XM5', 'Faturalı', 88884.61, 'Yok', 'Satışta', '2026-07-13 08:22:16', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (476, 'Garmin Fenix', 'Sıfır Ürün', 54936.94, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (477, 'GoPro Hero', 'Faturalı', 81368.78, 'Var', 'Satışta', '2026-07-13 08:22:16', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (478, 'Bose QC Ultra', '1 TB Gri', 44679.28, 'Yok', 'Satışta', '2026-07-13 08:22:16', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (479, 'Logitech MX Master', '512 GB Beyaz', 2146.68, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (480, 'Apple Watch', 'Premium Seri', 40941.16, 'Yok', 'Satışta', '2026-07-13 08:22:16', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (481, 'MSI Katana', '256 GB Mavi', 12763.78, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (482, 'LG UltraGear', '256 GB Mavi', 39804.65, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (483, 'SteelSeries Apex', 'Garantili', 36871.74, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (484, 'Bose QC Ultra', 'Yeni Model', 12572.76, 'Var', 'Satışta', '2026-07-13 08:22:16', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (485, 'Surface Laptop', 'Hızlı Teslim', 88266.67, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (486, 'Kindle Paperwhite', '128 GB Siyah', 34235.79, 'Yok', 'Satışta', '2026-07-13 08:22:16', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (487, 'GoPro Hero', 'Yeni Model', 58139.80, 'Yok', 'Satışta', '2026-07-13 08:22:16', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (488, 'Bose QC Ultra', 'Hızlı Teslim', 95785.06, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (489, 'Acer Nitro', '1 TB Gri', 51441.21, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (490, 'Surface Laptop', 'Kutulu', 64967.84, 'Var', 'Satışta', '2026-07-13 08:22:16', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (491, 'Acer Nitro', '512 GB Beyaz', 48624.79, 'Var', 'Satışta', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (492, 'Huawei MateBook', '1 TB Gri', 64610.83, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (493, 'GoPro Hero', 'Sıfır Ürün', 75344.59, 'Yok', 'Satışta', '2026-07-13 08:22:16', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (494, 'Xiaomi Redmi', 'Faturalı', 83480.21, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (495, 'Bose QC Ultra', 'Yeni Model', 38141.80, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (496, 'Dell XPS', 'Faturalı', 13247.45, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (497, 'LG UltraGear', '1 TB Gri', 70157.28, 'Var', 'Satışta', '2026-07-13 08:22:16', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (498, 'Logitech MX Master', 'Yeni Model', 9856.21, 'Var', 'Satışta', '2026-07-13 08:22:16', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (499, 'Samsung Galaxy S25', 'Sıfır Ürün', 26817.03, 'Var', 'Satışta', '2026-07-13 08:22:16', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (500, 'iPhone 16', '512 GB Beyaz', 20813.09, 'Yok', 'Satışta', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (501, 'PlayStation 5', 'Hızlı Teslim', 84549.91, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (502, 'SteelSeries Apex', '128 GB Siyah', 16317.61, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (503, 'MacBook Pro', 'Yeni Model', 5780.96, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (504, 'HP Victus', 'Kutulu', 84465.72, 'Var', 'Satışta', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (505, 'Asus ROG', '512 GB Beyaz', 74132.26, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (506, 'iPad Air', 'Premium Seri', 22166.90, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (507, 'MacBook Pro', 'Premium Seri', 82666.52, 'Yok', 'Satışta', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (508, 'Lenovo ThinkPad', '1 TB Gri', 74212.26, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (509, 'Anker PowerBank', 'İkinci El Temiz', 58950.72, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (510, 'Lenovo ThinkPad', 'Garantili', 52852.55, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (511, 'Canon EOS R50', '1 TB Gri', 20718.28, 'Yok', 'Satışta', '2026-07-13 08:22:16', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (512, 'SteelSeries Apex', '1 TB Gri', 78140.68, 'Yok', 'Satışta', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (513, 'MSI Katana', 'Sıfır Ürün', 38803.48, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (514, 'MSI Katana', 'İkinci El Temiz', 26290.32, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (515, 'Razer Blade', '1 TB Gri', 82578.69, 'Yok', 'Satışta', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (516, 'Acer Nitro', '256 GB Mavi', 5911.99, 'Yok', 'Satışta', '2026-07-13 08:22:16', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (517, 'MacBook Pro', 'Garantili', 5536.64, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (518, 'LG UltraGear', '128 GB Siyah', 98377.09, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (519, 'Canon EOS R50', '256 GB Mavi', 34289.00, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (520, 'JBL Charge', 'Sıfır Ürün', 7353.69, 'Yok', 'Satışta', '2026-07-13 08:22:16', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (521, 'GoPro Hero', 'Faturalı', 66106.84, 'Var', 'Satışta', '2026-07-13 08:22:16', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (522, 'JBL Charge', 'Kutulu', 53296.57, 'Yok', 'Satışta', '2026-07-13 08:22:16', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (523, 'Sony WH-1000XM5', '1 TB Gri', 59235.92, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (524, 'Surface Laptop', '1 TB Gri', 4055.99, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (525, 'Sony WH-1000XM5', 'Kutulu', 11373.47, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (526, 'HP Victus', 'Kutulu', 34862.56, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (527, 'HP Victus', 'Premium Seri', 77488.81, 'Yok', 'Satışta', '2026-07-13 08:22:16', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (528, 'Lenovo ThinkPad', '512 GB Beyaz', 10232.08, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (529, 'Sony WH-1000XM5', 'Garantili', 63772.17, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (530, 'Bose QC Ultra', '256 GB Mavi', 59553.59, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (531, 'Garmin Fenix', 'Yeni Model', 14731.76, 'Yok', 'Satışta', '2026-07-13 08:22:16', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (532, 'Dell XPS', 'Sıfır Ürün', 48723.12, 'Var', 'Satışta', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (533, 'Meta Quest 3', 'Hızlı Teslim', 53568.26, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (534, 'Surface Laptop', 'Faturalı', 86749.82, 'Var', 'Satışta', '2026-07-13 08:22:16', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (535, 'Apple Watch', 'Garantili', 97886.51, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (536, 'Razer Blade', 'Garantili', 58219.80, 'Yok', 'Satışta', '2026-07-13 08:22:16', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (537, 'iPhone 16', 'Sıfır Ürün', 32431.82, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (538, 'iPad Air', 'Hızlı Teslim', 61425.61, 'Var', 'Satışta', '2026-07-13 08:22:16', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (539, 'Surface Laptop', '1 TB Gri', 20379.39, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (540, 'Canon EOS R50', 'İkinci El Temiz', 82986.18, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (541, 'SteelSeries Apex', 'Garantili', 18529.34, 'Var', 'Satışta', '2026-07-13 08:22:16', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (542, 'Bose QC Ultra', '256 GB Mavi', 12217.92, 'Var', 'Satışta', '2026-07-13 08:22:16', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (543, 'Bose QC Ultra', '1 TB Gri', 58131.06, 'Var', 'Satışta', '2026-07-13 08:22:16', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (544, 'Surface Laptop', 'Premium Seri', 71878.79, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (545, 'Kindle Paperwhite', 'Hızlı Teslim', 80552.26, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (546, 'Meta Quest 3', 'Premium Seri', 62213.79, 'Yok', 'Satışta', '2026-07-13 08:22:16', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (547, 'Razer Blade', 'Faturalı', 58855.96, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (548, 'MSI Katana', 'Hızlı Teslim', 13278.94, 'Var', 'Satışta', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (549, 'Kindle Paperwhite', 'Kutulu', 23818.05, 'Var', 'Satışta', '2026-07-13 08:22:16', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (550, 'Bose QC Ultra', 'Kutulu', 32993.70, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (551, 'Huawei MateBook', 'Garantili', 32200.55, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (552, 'Razer Blade', '128 GB Siyah', 75174.54, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (553, 'Garmin Fenix', 'Kutulu', 82897.83, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (554, 'Acer Nitro', 'Kutulu', 2388.53, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (555, 'AirPods Pro', 'Garantili', 62890.09, 'Yok', 'Satışta', '2026-07-13 08:22:16', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (556, 'MSI Katana', 'Garantili', 94001.31, 'Yok', 'Satışta', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (557, 'iPhone 16', '512 GB Beyaz', 4194.03, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (558, 'Razer Blade', 'Sıfır Ürün', 21043.26, 'Var', 'Satışta', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (559, 'Razer Blade', 'Garantili', 66148.54, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (560, 'Samsung Galaxy S25', '512 GB Beyaz', 69316.27, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (561, 'Garmin Fenix', 'Kutulu', 93188.57, 'Yok', 'Satışta', '2026-07-13 08:22:16', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (562, 'Bose QC Ultra', 'Premium Seri', 95637.59, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (563, 'Sony WH-1000XM5', '512 GB Beyaz', 47452.71, 'Yok', 'Satışta', '2026-07-13 08:22:16', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (564, 'Kindle Paperwhite', '256 GB Mavi', 97677.21, 'Yok', 'Satışta', '2026-07-13 08:22:16', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (565, 'SteelSeries Apex', 'İkinci El Temiz', 44735.45, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (566, 'HP Victus', '256 GB Mavi', 4384.00, 'Var', 'Satışta', '2026-07-13 08:22:16', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (567, 'Surface Laptop', '256 GB Mavi', 1877.33, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (568, 'Logitech MX Master', 'İkinci El Temiz', 75863.69, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (569, 'Bose QC Ultra', 'Kutulu', 88867.34, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (570, 'Sony WH-1000XM5', 'İkinci El Temiz', 6114.18, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (571, 'AirPods Pro', '1 TB Gri', 46464.29, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (572, 'MSI Katana', '256 GB Mavi', 81340.71, 'Yok', 'Satışta', '2026-07-13 08:22:16', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (573, 'LG UltraGear', '128 GB Siyah', 40626.65, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (574, 'LG UltraGear', 'Yeni Model', 31108.39, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (575, 'Dell XPS', 'Sıfır Ürün', 37221.57, 'Var', 'Satışta', '2026-07-13 08:22:16', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (576, 'Huawei MateBook', '512 GB Beyaz', 4831.23, 'Yok', 'Satışta', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (577, 'AirPods Pro', '512 GB Beyaz', 92941.87, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (578, 'MacBook Pro', 'Faturalı', 60650.96, 'Var', 'Satışta', '2026-07-13 08:22:16', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (579, 'GoPro Hero', 'İkinci El Temiz', 67756.77, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (580, 'Sony WH-1000XM5', '128 GB Siyah', 58021.11, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (581, 'MSI Katana', 'Sıfır Ürün', 20333.79, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (582, 'Acer Nitro', 'Garantili', 88769.70, 'Var', 'Satışta', '2026-07-13 08:22:16', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (583, 'Anker PowerBank', 'Kutulu', 69692.62, 'Yok', 'Satışta', '2026-07-13 08:22:16', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (584, 'Huawei MateBook', 'Kutulu', 33673.89, 'Yok', 'Satışta', '2026-07-13 08:22:16', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (585, 'Lenovo ThinkPad', 'Sıfır Ürün', 10451.57, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (586, 'Nintendo Switch', 'Hızlı Teslim', 97609.83, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (587, 'Logitech MX Master', 'Premium Seri', 93375.23, 'Var', 'Satışta', '2026-07-13 08:22:16', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (588, 'Meta Quest 3', 'Premium Seri', 45644.65, 'Yok', 'Satışta', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (589, 'JBL Charge', 'Garantili', 56273.57, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (590, 'Samsung Galaxy S25', 'Kutulu', 17129.20, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (591, 'Apple Watch', 'Faturalı', 60383.55, 'Yok', 'Satışta', '2026-07-13 08:22:16', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (592, 'Meta Quest 3', '1 TB Gri', 96909.17, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (593, 'HP Victus', 'Kutulu', 84689.29, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (594, 'Xiaomi Redmi', '256 GB Mavi', 62863.73, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (595, 'Anker PowerBank', '128 GB Siyah', 30303.14, 'Yok', 'Satışta', '2026-07-13 08:22:16', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (596, 'Surface Laptop', '256 GB Mavi', 41882.51, 'Var', 'Satışta', '2026-07-13 08:22:16', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (597, 'Asus ROG', '128 GB Siyah', 85401.08, 'Var', 'Satışta', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (598, 'Samsung Galaxy S25', '128 GB Siyah', 91961.13, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (599, 'LG UltraGear', 'Garantili', 48161.09, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (600, 'Canon EOS R50', 'Yeni Model', 47962.19, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (601, 'Canon EOS R50', 'Premium Seri', 7824.53, 'Yok', 'Satışta', '2026-07-13 08:22:16', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (602, 'iPad Air', 'Garantili', 15651.19, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (603, 'Sony WH-1000XM5', '1 TB Gri', 20923.83, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (604, 'MacBook Pro', 'Faturalı', 60687.67, 'Var', 'Satışta', '2026-07-13 08:22:16', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (605, 'HP Victus', 'İkinci El Temiz', 97261.60, 'Var', 'Satışta', '2026-07-13 08:22:16', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (606, 'Samsung Galaxy S25', 'Premium Seri', 70278.36, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (607, 'iPad Air', '256 GB Mavi', 26995.27, 'Var', 'Satışta', '2026-07-13 08:22:16', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (608, 'Kindle Paperwhite', '256 GB Mavi', 40479.06, 'Var', 'Satışta', '2026-07-13 08:22:16', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (609, 'Nintendo Switch', '512 GB Beyaz', 60861.78, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (610, 'iPhone 16', 'Sıfır Ürün', 45257.48, 'Yok', 'Satışta', '2026-07-13 08:22:16', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (611, 'Nintendo Switch', 'Hızlı Teslim', 83759.46, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (612, 'Meta Quest 3', 'Premium Seri', 61306.58, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (613, 'Sony WH-1000XM5', 'Garantili', 4122.91, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (614, 'Nintendo Switch', '128 GB Siyah', 64107.47, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (615, 'AirPods Pro', '128 GB Siyah', 53239.95, 'Var', 'Satışta', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (616, 'Garmin Fenix', 'Kutulu', 86447.63, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (617, 'iPhone 16', 'Garantili', 32958.78, 'Yok', 'Satışta', '2026-07-13 08:22:16', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (618, 'PlayStation 5', '1 TB Gri', 57435.97, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (619, 'Dell XPS', 'Faturalı', 27723.36, 'Var', 'Satışta', '2026-07-13 08:22:16', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (620, 'Lenovo ThinkPad', 'Sıfır Ürün', 93444.52, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (621, 'Nintendo Switch', 'Premium Seri', 27529.50, 'Var', 'Satışta', '2026-07-13 08:22:16', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (622, 'MacBook Pro', '512 GB Beyaz', 87266.16, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (623, 'MSI Katana', 'Hızlı Teslim', 27902.54, 'Var', 'Satışta', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (624, 'Meta Quest 3', '1 TB Gri', 25428.70, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (625, 'iPhone 16', '256 GB Mavi', 45875.34, 'Yok', 'Satışta', '2026-07-13 08:22:16', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (626, 'Bose QC Ultra', 'Yeni Model', 19900.37, 'Yok', 'Satışta', '2026-07-13 08:22:16', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (627, 'Garmin Fenix', '512 GB Beyaz', 24336.95, 'Var', 'Satışta', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (628, 'Lenovo ThinkPad', 'Sıfır Ürün', 10644.65, 'Yok', 'Satışta', '2026-07-13 08:22:16', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (629, 'Meta Quest 3', 'Hızlı Teslim', 41192.65, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (630, 'AirPods Pro', '128 GB Siyah', 26564.62, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (631, 'MSI Katana', 'Sıfır Ürün', 23675.83, 'Yok', 'Satışta', '2026-07-13 08:22:16', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (632, 'MSI Katana', 'Yeni Model', 50447.88, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (633, 'Dell XPS', 'Hızlı Teslim', 67559.31, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (634, 'Xiaomi Redmi', '512 GB Beyaz', 63971.70, 'Var', 'Satışta', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (635, 'Logitech MX Master', 'Garantili', 45023.66, 'Var', 'Satışta', '2026-07-13 08:22:16', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (636, 'Logitech MX Master', '1 TB Gri', 21214.90, 'Yok', 'Satışta', '2026-07-13 08:22:16', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (637, 'Apple Watch', '1 TB Gri', 12511.26, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (638, 'Huawei MateBook', 'Hızlı Teslim', 5475.02, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (639, 'Dell XPS', 'Premium Seri', 83665.77, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (640, 'GoPro Hero', '256 GB Mavi', 65263.43, 'Yok', 'Satışta', '2026-07-13 08:22:16', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (641, 'HP Victus', '1 TB Gri', 5252.47, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (642, 'Kindle Paperwhite', 'Sıfır Ürün', 29759.88, 'Var', 'Satışta', '2026-07-13 08:22:16', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (643, 'Sony WH-1000XM5', 'Sıfır Ürün', 62354.66, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (644, 'SteelSeries Apex', 'Sıfır Ürün', 43885.50, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (645, 'Xiaomi Redmi', 'Yeni Model', 68650.34, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (646, 'Lenovo ThinkPad', 'Garantili', 65789.39, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (647, 'Nintendo Switch', '512 GB Beyaz', 21969.26, 'Var', 'Satışta', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (648, 'Logitech MX Master', 'Hızlı Teslim', 92823.89, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (649, 'Surface Laptop', 'Faturalı', 85011.27, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (650, 'Canon EOS R50', '1 TB Gri', 49910.69, 'Yok', 'Satışta', '2026-07-13 08:22:16', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (651, 'Razer Blade', 'Hızlı Teslim', 39094.27, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (652, 'Samsung Galaxy S25', 'Hızlı Teslim', 98496.68, 'Yok', 'Satışta', '2026-07-13 08:22:16', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (653, 'PlayStation 5', '1 TB Gri', 5780.33, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (654, 'AirPods Pro', '1 TB Gri', 67378.65, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (655, 'Meta Quest 3', 'Hızlı Teslim', 14003.04, 'Var', 'Satışta', '2026-07-13 08:22:16', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (656, 'Kindle Paperwhite', 'Yeni Model', 12598.44, 'Var', 'Satışta', '2026-07-13 08:22:16', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (657, 'HP Victus', 'Sıfır Ürün', 13966.58, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (658, 'Nintendo Switch', 'Hızlı Teslim', 62331.06, 'Yok', 'Satışta', '2026-07-13 08:22:16', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (659, 'Logitech MX Master', '1 TB Gri', 70291.78, 'Yok', 'Satışta', '2026-07-13 08:22:16', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (660, 'Samsung Galaxy S25', 'Kutulu', 2794.84, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (661, 'Surface Laptop', '512 GB Beyaz', 45384.96, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (662, 'MacBook Pro', '256 GB Mavi', 46167.98, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (663, 'Huawei MateBook', '1 TB Gri', 89546.59, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (664, 'LG UltraGear', 'Garantili', 17125.38, 'Yok', 'Satışta', '2026-07-13 08:22:16', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (665, 'MSI Katana', '256 GB Mavi', 77463.24, 'Yok', 'Satışta', '2026-07-13 08:22:16', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (666, 'Asus ROG', 'Sıfır Ürün', 81940.00, 'Yok', 'Satışta Değil', '2026-07-13 08:22:16', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (667, 'PlayStation 5', 'Yeni Model', 67173.13, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (668, 'Garmin Fenix', 'İkinci El Temiz', 61727.88, 'Yok', 'Satışta', '2026-07-13 08:22:16', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (669, 'MSI Katana', '128 GB Siyah', 19736.96, 'Var', 'Satışta', '2026-07-13 08:22:16', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (670, 'iPad Air', 'Premium Seri', 13808.71, 'Yok', 'Satışta', '2026-07-13 08:22:16', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (671, 'Samsung Galaxy S25', 'Hızlı Teslim', 37418.93, 'Yok', 'Satışta', '2026-07-13 08:22:16', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (672, 'Nintendo Switch', '1 TB Gri', 94254.94, 'Yok', 'Satışta', '2026-07-13 08:22:16', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (673, 'LG UltraGear', 'Yeni Model', 89576.35, 'Var', 'Satışta', '2026-07-13 08:22:16', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (674, 'Garmin Fenix', 'Garantili', 35276.54, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (675, 'Razer Blade', 'Hızlı Teslim', 93425.54, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (676, 'JBL Charge', 'Yeni Model', 18611.66, 'Yok', 'Satışta', '2026-07-13 08:22:16', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (677, 'Huawei MateBook', '1 TB Gri', 20563.31, 'Yok', 'Satışta', '2026-07-13 08:22:16', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (678, 'Canon EOS R50', 'Faturalı', 70810.65, 'Var', 'Satışta', '2026-07-13 08:22:16', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (679, 'HP Victus', 'Premium Seri', 30866.20, 'Var', 'Satışta Değil', '2026-07-13 08:22:16', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (680, 'HP Victus', 'Hızlı Teslim', 41698.43, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (681, 'Samsung Galaxy S25', 'Faturalı', 55232.40, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (682, 'Samsung Galaxy S25', 'Faturalı', 96511.75, 'Yok', 'Satışta', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (683, 'Samsung Galaxy S25', 'Yeni Model', 25193.10, 'Yok', 'Satışta', '2026-07-13 08:22:17', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (684, 'PlayStation 5', '1 TB Gri', 24160.74, 'Var', 'Satışta', '2026-07-13 08:22:17', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (685, 'MSI Katana', 'Hızlı Teslim', 84170.68, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (686, 'Kindle Paperwhite', 'Faturalı', 8563.48, 'Yok', 'Satışta', '2026-07-13 08:22:17', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (687, 'Anker PowerBank', 'Garantili', 84158.66, 'Yok', 'Satışta', '2026-07-13 08:22:17', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (688, 'Canon EOS R50', 'Sıfır Ürün', 25830.51, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (689, 'AirPods Pro', 'Kutulu', 70127.92, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (690, 'MSI Katana', 'Garantili', 5599.59, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (691, 'iPad Air', 'Faturalı', 11327.36, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (692, 'Nintendo Switch', '128 GB Siyah', 98750.78, 'Var', 'Satışta', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (693, 'Logitech MX Master', 'İkinci El Temiz', 80327.37, 'Var', 'Satışta', '2026-07-13 08:22:17', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (694, 'Acer Nitro', 'Hızlı Teslim', 66225.71, 'Var', 'Satışta', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (695, 'Logitech MX Master', 'İkinci El Temiz', 41964.42, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (696, 'SteelSeries Apex', 'Premium Seri', 95301.65, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (697, 'GoPro Hero', 'Yeni Model', 62366.14, 'Var', 'Satışta', '2026-07-13 08:22:17', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (698, 'Asus ROG', 'Sıfır Ürün', 72139.77, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (699, 'JBL Charge', '256 GB Mavi', 13465.18, 'Var', 'Satışta', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (700, 'Kindle Paperwhite', 'Hızlı Teslim', 93274.23, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (701, 'Kindle Paperwhite', 'Yeni Model', 98989.68, 'Yok', 'Satışta', '2026-07-13 08:22:17', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (702, 'JBL Charge', 'Kutulu', 10568.76, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (703, 'Razer Blade', '128 GB Siyah', 54268.26, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (704, 'Nintendo Switch', '512 GB Beyaz', 22327.76, 'Yok', 'Satışta', '2026-07-13 08:22:17', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (705, 'GoPro Hero', 'İkinci El Temiz', 78472.70, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (706, 'Razer Blade', 'Kutulu', 45288.18, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (707, 'Lenovo ThinkPad', '128 GB Siyah', 62018.42, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (708, 'PlayStation 5', 'İkinci El Temiz', 47583.57, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (709, 'Meta Quest 3', 'Sıfır Ürün', 94371.15, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (710, 'Nintendo Switch', '512 GB Beyaz', 43976.56, 'Var', 'Satışta', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (711, 'Xiaomi Redmi', '256 GB Mavi', 60507.98, 'Var', 'Satışta', '2026-07-13 08:22:17', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (712, 'Anker PowerBank', '512 GB Beyaz', 13431.02, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (713, 'Huawei MateBook', '512 GB Beyaz', 71960.31, 'Var', 'Satışta', '2026-07-13 08:22:17', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (714, 'Dell XPS', 'Sıfır Ürün', 33255.24, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (715, 'JBL Charge', '1 TB Gri', 28532.12, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (716, 'Apple Watch', 'Hızlı Teslim', 93281.49, 'Yok', 'Satışta', '2026-07-13 08:22:17', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (717, 'Samsung Galaxy S25', 'Kutulu', 6081.25, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (718, 'iPad Air', 'Sıfır Ürün', 46852.03, 'Var', 'Satışta', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (719, 'JBL Charge', '1 TB Gri', 73720.33, 'Var', 'Satışta', '2026-07-13 08:22:17', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (720, 'Samsung Galaxy S25', '256 GB Mavi', 74829.88, 'Yok', 'Satışta', '2026-07-13 08:22:17', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (721, 'Bose QC Ultra', '1 TB Gri', 63893.31, 'Var', 'Satışta', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (722, 'Acer Nitro', 'Hızlı Teslim', 80796.48, 'Yok', 'Satışta', '2026-07-13 08:22:17', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (723, 'Samsung Galaxy S25', 'Kutulu', 30869.58, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (724, 'MacBook Pro', 'Yeni Model', 45375.08, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (725, 'HP Victus', 'Kutulu', 6536.51, 'Var', 'Satışta', '2026-07-13 08:22:17', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (726, 'Anker PowerBank', 'Premium Seri', 70014.15, 'Var', 'Satışta', '2026-07-13 08:22:17', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (727, 'PlayStation 5', 'Faturalı', 77594.90, 'Yok', 'Satışta', '2026-07-13 08:22:17', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (728, 'Samsung Galaxy S25', '256 GB Mavi', 20581.53, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (729, 'PlayStation 5', 'Kutulu', 21682.45, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (730, 'iPhone 16', '512 GB Beyaz', 25412.13, 'Var', 'Satışta', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (731, 'iPad Air', 'İkinci El Temiz', 24101.45, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (732, 'MacBook Pro', 'Garantili', 23334.27, 'Var', 'Satışta', '2026-07-13 08:22:17', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (733, 'iPad Air', '256 GB Mavi', 28670.24, 'Var', 'Satışta', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (734, 'Apple Watch', '1 TB Gri', 8388.01, 'Yok', 'Satışta', '2026-07-13 08:22:17', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (735, 'Surface Laptop', 'Premium Seri', 60376.23, 'Var', 'Satışta', '2026-07-13 08:22:17', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (736, 'Huawei MateBook', 'Sıfır Ürün', 71445.49, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (737, 'Xiaomi Redmi', 'Garantili', 70624.03, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (738, 'SteelSeries Apex', 'Yeni Model', 67839.18, 'Yok', 'Satışta', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (739, 'Sony WH-1000XM5', 'Faturalı', 36367.12, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (740, 'MSI Katana', '512 GB Beyaz', 84828.94, 'Yok', 'Satışta', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (741, 'Kindle Paperwhite', 'Kutulu', 15223.49, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (742, 'Bose QC Ultra', '512 GB Beyaz', 96013.96, 'Yok', 'Satışta', '2026-07-13 08:22:17', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (743, 'MacBook Pro', '1 TB Gri', 76460.05, 'Yok', 'Satışta', '2026-07-13 08:22:17', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (744, 'iPad Air', '1 TB Gri', 61365.64, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (745, 'Acer Nitro', 'Sıfır Ürün', 40884.03, 'Var', 'Satışta', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (746, 'Dell XPS', '512 GB Beyaz', 91055.23, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (747, 'Canon EOS R50', 'Sıfır Ürün', 61066.28, 'Var', 'Satışta', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (748, 'Kindle Paperwhite', 'İkinci El Temiz', 94749.80, 'Yok', 'Satışta', '2026-07-13 08:22:17', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (749, 'Razer Blade', '1 TB Gri', 33048.97, 'Yok', 'Satışta', '2026-07-13 08:22:17', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (750, 'Kindle Paperwhite', '256 GB Mavi', 86815.43, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (751, 'Dell XPS', 'Premium Seri', 29856.78, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (752, 'MSI Katana', 'Faturalı', 12765.45, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (753, 'Meta Quest 3', 'Premium Seri', 6055.43, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (754, 'Anker PowerBank', 'Yeni Model', 8350.44, 'Yok', 'Satışta', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (755, 'Asus ROG', 'Garantili', 89514.14, 'Yok', 'Satışta', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (756, 'Logitech MX Master', 'Garantili', 82573.51, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (757, 'Anker PowerBank', 'Premium Seri', 80272.54, 'Var', 'Satışta', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (758, 'Lenovo ThinkPad', 'Garantili', 77768.10, 'Var', 'Satışta', '2026-07-13 08:22:17', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (759, 'JBL Charge', 'Sıfır Ürün', 94646.15, 'Yok', 'Satışta', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (760, 'Anker PowerBank', 'Faturalı', 16933.93, 'Var', 'Satışta', '2026-07-13 08:22:17', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (761, 'Xiaomi Redmi', 'Kutulu', 65207.54, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (762, 'iPad Air', 'Premium Seri', 42003.96, 'Var', 'Satışta', '2026-07-13 08:22:17', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (763, 'MacBook Pro', '512 GB Beyaz', 17313.42, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (764, 'Meta Quest 3', 'Faturalı', 31727.23, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (765, 'Nintendo Switch', 'Yeni Model', 51741.69, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (766, 'Xiaomi Redmi', 'Faturalı', 54408.10, 'Var', 'Satışta', '2026-07-13 08:22:17', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (767, 'Apple Watch', '256 GB Mavi', 21138.20, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (768, 'Canon EOS R50', 'Premium Seri', 71863.18, 'Yok', 'Satışta', '2026-07-13 08:22:17', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (769, 'JBL Charge', '1 TB Gri', 36045.80, 'Var', 'Satışta', '2026-07-13 08:22:17', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (770, 'Logitech MX Master', 'Yeni Model', 40403.81, 'Yok', 'Satışta', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (771, 'Anker PowerBank', 'Sıfır Ürün', 22328.13, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (772, 'Canon EOS R50', 'Kutulu', 35068.03, 'Yok', 'Satışta', '2026-07-13 08:22:17', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (773, 'Surface Laptop', 'Premium Seri', 89705.49, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (774, 'SteelSeries Apex', 'Sıfır Ürün', 81655.26, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (775, 'Meta Quest 3', '128 GB Siyah', 86608.02, 'Var', 'Satışta', '2026-07-13 08:22:17', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (776, 'MacBook Pro', 'Faturalı', 74478.82, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (777, 'Canon EOS R50', 'Sıfır Ürün', 4150.37, 'Var', 'Satışta', '2026-07-13 08:22:17', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (778, 'Apple Watch', 'Faturalı', 39626.11, 'Yok', 'Satışta', '2026-07-13 08:22:17', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (779, 'Nintendo Switch', 'Garantili', 56942.60, 'Var', 'Satışta', '2026-07-13 08:22:17', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (780, 'Meta Quest 3', '1 TB Gri', 54706.09, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (781, 'Bose QC Ultra', 'Kutulu', 84962.70, 'Var', 'Satışta', '2026-07-13 08:22:17', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (782, 'GoPro Hero', 'Sıfır Ürün', 48170.47, 'Var', 'Satışta', '2026-07-13 08:22:17', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (783, 'Samsung Galaxy S25', '256 GB Mavi', 99594.81, 'Yok', 'Satışta', '2026-07-13 08:22:17', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (784, 'Dell XPS', 'Yeni Model', 63758.75, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (785, 'Anker PowerBank', '512 GB Beyaz', 51481.42, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (786, 'GoPro Hero', 'Yeni Model', 91045.18, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (787, 'Asus ROG', '512 GB Beyaz', 49580.78, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (788, 'Nintendo Switch', 'İkinci El Temiz', 59641.34, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (789, 'Bose QC Ultra', 'İkinci El Temiz', 71395.60, 'Yok', 'Satışta', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (790, 'HP Victus', 'İkinci El Temiz', 72469.46, 'Var', 'Satışta', '2026-07-13 08:22:17', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (791, 'SteelSeries Apex', 'Hızlı Teslim', 91796.77, 'Var', 'Satışta', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (792, 'Surface Laptop', 'Kutulu', 84290.61, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (793, 'Garmin Fenix', 'Sıfır Ürün', 12990.61, 'Yok', 'Satışta', '2026-07-13 08:22:17', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (794, 'Apple Watch', 'Faturalı', 77629.17, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (795, 'Anker PowerBank', 'Yeni Model', 44256.26, 'Var', 'Satışta', '2026-07-13 08:22:17', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (796, 'Razer Blade', 'Faturalı', 80609.71, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (797, 'Huawei MateBook', '1 TB Gri', 11845.90, 'Var', 'Satışta', '2026-07-13 08:22:17', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (798, 'Razer Blade', 'Yeni Model', 94646.85, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (799, 'Logitech MX Master', 'İkinci El Temiz', 9440.13, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (800, 'AirPods Pro', 'Faturalı', 8752.39, 'Yok', 'Satışta', '2026-07-13 08:22:17', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (801, 'Nintendo Switch', 'Yeni Model', 10958.68, 'Var', 'Satışta', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (802, 'Apple Watch', '256 GB Mavi', 53401.66, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (803, 'Xiaomi Redmi', 'Garantili', 4960.30, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (804, 'JBL Charge', '256 GB Mavi', 23905.90, 'Yok', 'Satışta', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (805, 'PlayStation 5', 'Hızlı Teslim', 3885.74, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (806, 'iPhone 16', 'Garantili', 59002.65, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (807, 'Samsung Galaxy S25', 'Yeni Model', 6381.87, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (808, 'Garmin Fenix', 'Faturalı', 62709.41, 'Var', 'Satışta', '2026-07-13 08:22:17', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (809, 'GoPro Hero', 'Faturalı', 46134.42, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (810, 'Acer Nitro', 'Kutulu', 96195.63, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (811, 'GoPro Hero', 'Faturalı', 2849.66, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (812, 'Garmin Fenix', 'Yeni Model', 92929.62, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (813, 'Xiaomi Redmi', 'Faturalı', 92198.03, 'Yok', 'Satışta', '2026-07-13 08:22:17', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (814, 'Samsung Galaxy S25', 'Kutulu', 48069.67, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (815, 'MSI Katana', '128 GB Siyah', 71988.58, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (816, 'Sony WH-1000XM5', '1 TB Gri', 9773.58, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (817, 'Lenovo ThinkPad', 'Yeni Model', 50595.78, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (818, 'Anker PowerBank', 'Faturalı', 87694.83, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (819, 'GoPro Hero', '512 GB Beyaz', 75862.99, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (820, 'iPad Air', 'Premium Seri', 75435.32, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (821, 'SteelSeries Apex', 'Faturalı', 27167.35, 'Var', 'Satışta', '2026-07-13 08:22:17', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (822, 'Logitech MX Master', '1 TB Gri', 23999.91, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (823, 'Xiaomi Redmi', 'Sıfır Ürün', 63441.16, 'Yok', 'Satışta', '2026-07-13 08:22:17', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (824, 'Bose QC Ultra', '256 GB Mavi', 16803.89, 'Yok', 'Satışta', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (825, 'Logitech MX Master', 'Kutulu', 2822.33, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (826, 'Anker PowerBank', 'İkinci El Temiz', 80746.28, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (827, 'MacBook Pro', 'Hızlı Teslim', 55146.22, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (828, 'Nintendo Switch', 'İkinci El Temiz', 30577.74, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (829, 'AirPods Pro', '256 GB Mavi', 10011.49, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (830, 'Xiaomi Redmi', 'Premium Seri', 56406.36, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (831, 'iPad Air', '256 GB Mavi', 12357.37, 'Yok', 'Satışta', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (832, 'Huawei MateBook', 'Faturalı', 80060.60, 'Yok', 'Satışta', '2026-07-13 08:22:17', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (833, 'Apple Watch', 'Faturalı', 19228.26, 'Var', 'Satışta', '2026-07-13 08:22:17', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (834, 'MSI Katana', '1 TB Gri', 68458.64, 'Yok', 'Satışta', '2026-07-13 08:22:17', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (835, 'LG UltraGear', '128 GB Siyah', 96571.07, 'Var', 'Satışta', '2026-07-13 08:22:17', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (836, 'iPad Air', '1 TB Gri', 83195.30, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (837, 'Samsung Galaxy S25', 'İkinci El Temiz', 90676.87, 'Yok', 'Satışta', '2026-07-13 08:22:17', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (838, 'Bose QC Ultra', '128 GB Siyah', 11709.44, 'Yok', 'Satışta', '2026-07-13 08:22:17', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (839, 'Razer Blade', 'Sıfır Ürün', 4574.57, 'Var', 'Satışta', '2026-07-13 08:22:17', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (840, 'Bose QC Ultra', 'Faturalı', 56377.38, 'Var', 'Satışta', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (841, 'LG UltraGear', 'Yeni Model', 64532.88, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (842, 'MSI Katana', 'Garantili', 25665.39, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (843, 'AirPods Pro', '128 GB Siyah', 75370.63, 'Var', 'Satışta', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (844, 'iPhone 16', 'Faturalı', 8823.48, 'Yok', 'Satışta', '2026-07-13 08:22:17', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (845, 'Dell XPS', 'Premium Seri', 80367.05, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (846, 'Meta Quest 3', '512 GB Beyaz', 27838.21, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (847, 'Dell XPS', 'Yeni Model', 54700.82, 'Var', 'Satışta', '2026-07-13 08:22:17', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (848, 'Asus ROG', 'Faturalı', 58095.76, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (849, 'Apple Watch', 'Premium Seri', 39627.74, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (850, 'Lenovo ThinkPad', 'Faturalı', 30594.64, 'Yok', 'Satışta', '2026-07-13 08:22:17', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (851, 'JBL Charge', 'İkinci El Temiz', 75905.24, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (852, 'MacBook Pro', '128 GB Siyah', 25146.38, 'Yok', 'Satışta', '2026-07-13 08:22:17', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (853, 'iPad Air', 'Garantili', 5999.41, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (854, 'Xiaomi Redmi', 'Faturalı', 29265.03, 'Yok', 'Satışta', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (855, 'iPad Air', 'Garantili', 74768.78, 'Var', 'Satışta', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (856, 'Logitech MX Master', 'Faturalı', 89206.41, 'Var', 'Satışta', '2026-07-13 08:22:17', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (857, 'MacBook Pro', '1 TB Gri', 40229.75, 'Var', 'Satışta', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (858, 'Apple Watch', '128 GB Siyah', 74669.67, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (859, 'Acer Nitro', 'Hızlı Teslim', 26922.36, 'Var', 'Satışta', '2026-07-13 08:22:17', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (860, 'Samsung Galaxy S25', 'Sıfır Ürün', 49652.87, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (861, 'AirPods Pro', 'İkinci El Temiz', 61174.92, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (862, 'Logitech MX Master', '256 GB Mavi', 63106.74, 'Var', 'Satışta', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (863, 'MacBook Pro', 'Garantili', 34712.23, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (864, 'Sony WH-1000XM5', 'Garantili', 73332.69, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (865, 'Razer Blade', '1 TB Gri', 32855.50, 'Var', 'Satışta', '2026-07-13 08:22:17', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (866, 'Surface Laptop', 'Garantili', 59241.68, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (867, 'Huawei MateBook', '1 TB Gri', 21263.93, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (868, 'Nintendo Switch', 'Sıfır Ürün', 95954.70, 'Yok', 'Satışta', '2026-07-13 08:22:17', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (869, 'Asus ROG', '128 GB Siyah', 43396.25, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (870, 'Xiaomi Redmi', 'Premium Seri', 15596.99, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (871, 'LG UltraGear', 'Garantili', 35480.96, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (872, 'Meta Quest 3', 'Garantili', 76403.02, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (873, 'HP Victus', 'Yeni Model', 59585.60, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (874, 'HP Victus', 'İkinci El Temiz', 90329.11, 'Var', 'Satışta', '2026-07-13 08:22:17', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (875, 'Surface Laptop', 'Hızlı Teslim', 72149.95, 'Var', 'Satışta Değil', '2026-07-13 08:22:17', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (876, 'Acer Nitro', 'Yeni Model', 85609.06, 'Var', 'Satışta', '2026-07-13 08:22:17', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (877, 'Dell XPS', '128 GB Siyah', 48275.14, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (878, 'SteelSeries Apex', 'Faturalı', 15099.55, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (879, 'Asus ROG', '512 GB Beyaz', 62306.62, 'Yok', 'Satışta', '2026-07-13 08:22:17', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (880, 'PlayStation 5', 'Sıfır Ürün', 17149.84, 'Var', 'Satışta', '2026-07-13 08:22:17', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (881, 'Bose QC Ultra', 'İkinci El Temiz', 76347.21, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (882, 'Garmin Fenix', 'Faturalı', 93960.89, 'Yok', 'Satışta', '2026-07-13 08:22:17', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (883, 'PlayStation 5', '256 GB Mavi', 47526.39, 'Yok', 'Satışta Değil', '2026-07-13 08:22:17', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (884, 'Sony WH-1000XM5', 'Garantili', 54023.25, 'Yok', 'Satışta', '2026-07-13 08:22:18', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (885, 'Razer Blade', 'Faturalı', 72219.55, 'Var', 'Satışta', '2026-07-13 08:22:18', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (886, 'Anker PowerBank', 'Faturalı', 9278.60, 'Yok', 'Satışta', '2026-07-13 08:22:18', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (887, 'iPad Air', '256 GB Mavi', 67480.00, 'Yok', 'Satışta', '2026-07-13 08:22:18', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (888, 'Samsung Galaxy S25', 'Garantili', 90124.43, 'Yok', 'Satışta', '2026-07-13 08:22:18', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (889, 'Lenovo ThinkPad', 'Yeni Model', 63605.36, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (890, 'MSI Katana', '512 GB Beyaz', 76772.50, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (891, 'MSI Katana', '512 GB Beyaz', 36198.34, 'Yok', 'Satışta', '2026-07-13 08:22:18', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (892, 'GoPro Hero', '1 TB Gri', 57345.41, 'Yok', 'Satışta', '2026-07-13 08:22:18', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (893, 'AirPods Pro', 'Hızlı Teslim', 55171.85, 'Var', 'Satışta', '2026-07-13 08:22:18', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (894, 'iPad Air', '128 GB Siyah', 38257.64, 'Var', 'Satışta', '2026-07-13 08:22:18', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (895, 'Anker PowerBank', 'Hızlı Teslim', 70056.90, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (896, 'Apple Watch', 'Sıfır Ürün', 97672.85, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (897, 'PlayStation 5', 'Hızlı Teslim', 53507.59, 'Yok', 'Satışta', '2026-07-13 08:22:18', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (898, 'JBL Charge', '512 GB Beyaz', 29716.56, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (899, 'Acer Nitro', 'Kutulu', 99638.21, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (900, 'Canon EOS R50', 'Faturalı', 84039.14, 'Var', 'Satışta', '2026-07-13 08:22:18', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (901, 'Huawei MateBook', 'Faturalı', 27757.54, 'Yok', 'Satışta', '2026-07-13 08:22:18', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (902, 'Dell XPS', 'Sıfır Ürün', 68480.80, 'Var', 'Satışta', '2026-07-13 08:22:18', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (903, 'MSI Katana', 'İkinci El Temiz', 41591.72, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (904, 'Dell XPS', 'İkinci El Temiz', 40036.25, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (905, 'Bose QC Ultra', '1 TB Gri', 96539.06, 'Var', 'Satışta', '2026-07-13 08:22:18', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (906, 'Meta Quest 3', 'Kutulu', 85927.24, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (907, 'Sony WH-1000XM5', 'Kutulu', 9327.53, 'Yok', 'Satışta', '2026-07-13 08:22:18', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (908, 'Meta Quest 3', 'İkinci El Temiz', 26298.60, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (909, 'Logitech MX Master', 'Kutulu', 59473.01, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (910, 'JBL Charge', '256 GB Mavi', 67187.32, 'Var', 'Satışta', '2026-07-13 08:22:18', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (911, 'MSI Katana', '1 TB Gri', 23795.21, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (912, 'LG UltraGear', 'Yeni Model', 18448.77, 'Var', 'Satışta', '2026-07-13 08:22:18', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (913, 'AirPods Pro', 'Hızlı Teslim', 35121.73, 'Yok', 'Satışta', '2026-07-13 08:22:18', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (914, 'Samsung Galaxy S25', 'Garantili', 36815.92, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (915, 'Huawei MateBook', '512 GB Beyaz', 74687.80, 'Yok', 'Satışta', '2026-07-13 08:22:18', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (916, 'Razer Blade', 'Faturalı', 29343.33, 'Yok', 'Satışta', '2026-07-13 08:22:18', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (917, 'Razer Blade', 'Yeni Model', 69780.80, 'Yok', 'Satışta', '2026-07-13 08:22:18', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (918, 'Kindle Paperwhite', '1 TB Gri', 18441.72, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (919, 'MacBook Pro', 'Kutulu', 7093.30, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (920, 'Asus ROG', 'Premium Seri', 68633.51, 'Yok', 'Satışta', '2026-07-13 08:22:18', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (921, 'HP Victus', '256 GB Mavi', 75872.23, 'Var', 'Satışta', '2026-07-13 08:22:18', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (922, 'Nintendo Switch', '1 TB Gri', 10381.93, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (923, 'Surface Laptop', 'İkinci El Temiz', 59244.28, 'Yok', 'Satışta', '2026-07-13 08:22:18', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (924, 'Razer Blade', 'Yeni Model', 14088.13, 'Yok', 'Satışta', '2026-07-13 08:22:18', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (925, 'GoPro Hero', 'Kutulu', 5924.93, 'Var', 'Satışta', '2026-07-13 08:22:18', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (926, 'PlayStation 5', 'Premium Seri', 55752.44, 'Yok', 'Satışta', '2026-07-13 08:22:18', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (927, 'MSI Katana', '256 GB Mavi', 88405.28, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (928, 'PlayStation 5', '512 GB Beyaz', 50643.21, 'Yok', 'Satışta', '2026-07-13 08:22:18', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (929, 'Meta Quest 3', '512 GB Beyaz', 44746.33, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (930, 'HP Victus', '1 TB Gri', 84865.18, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (931, 'HP Victus', 'Faturalı', 98026.44, 'Yok', 'Satışta', '2026-07-13 08:22:18', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (932, 'Razer Blade', '128 GB Siyah', 62534.44, 'Yok', 'Satışta', '2026-07-13 08:22:18', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (933, 'Bose QC Ultra', 'Kutulu', 11209.45, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (934, 'LG UltraGear', '1 TB Gri', 90823.01, 'Yok', 'Satışta', '2026-07-13 08:22:18', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (935, 'Garmin Fenix', 'Garantili', 45892.63, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 6, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (936, 'Bose QC Ultra', 'Hızlı Teslim', 15415.45, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (937, 'Canon EOS R50', 'Premium Seri', 31026.93, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (938, 'Logitech MX Master', 'Garantili', 75755.29, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (939, 'iPad Air', '512 GB Beyaz', 30762.29, 'Yok', 'Satışta', '2026-07-13 08:22:18', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (940, 'Bose QC Ultra', 'Yeni Model', 30338.03, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (941, 'AirPods Pro', '128 GB Siyah', 76171.07, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (942, 'PlayStation 5', 'Garantili', 48854.38, 'Var', 'Satışta', '2026-07-13 08:22:18', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (943, 'Dell XPS', 'Garantili', 21094.00, 'Yok', 'Satışta', '2026-07-13 08:22:18', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (944, 'Bose QC Ultra', 'Premium Seri', 84293.08, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (945, 'MacBook Pro', 'Kutulu', 12043.14, 'Var', 'Satışta', '2026-07-13 08:22:18', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (946, 'Meta Quest 3', '512 GB Beyaz', 48231.68, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (947, 'SteelSeries Apex', 'Kutulu', 94355.63, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (948, 'Xiaomi Redmi', 'İkinci El Temiz', 79478.68, 'Var', 'Satışta', '2026-07-13 08:22:18', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (949, 'Bose QC Ultra', '512 GB Beyaz', 77939.38, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (950, 'MacBook Pro', 'Premium Seri', 3468.05, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (951, 'iPhone 16', '256 GB Mavi', 79657.28, 'Var', 'Satışta', '2026-07-13 08:22:18', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (952, 'GoPro Hero', 'Premium Seri', 20818.02, 'Var', 'Satışta', '2026-07-13 08:22:18', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (953, 'Surface Laptop', '256 GB Mavi', 56206.36, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (954, 'Logitech MX Master', 'Faturalı', 77981.63, 'Var', 'Satışta', '2026-07-13 08:22:18', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (955, 'Canon EOS R50', '512 GB Beyaz', 7727.06, 'Var', 'Satışta', '2026-07-13 08:22:18', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (956, 'Logitech MX Master', 'Premium Seri', 76944.97, 'Yok', 'Satışta', '2026-07-13 08:22:18', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (957, 'GoPro Hero', 'Yeni Model', 86588.51, 'Var', 'Satışta', '2026-07-13 08:22:18', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (958, 'JBL Charge', '512 GB Beyaz', 85440.56, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (959, 'Samsung Galaxy S25', 'Hızlı Teslim', 82483.11, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (960, 'Samsung Galaxy S25', 'Garantili', 35573.79, 'Yok', 'Satışta', '2026-07-13 08:22:18', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (961, 'Asus ROG', '128 GB Siyah', 66957.50, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (962, 'Huawei MateBook', 'Faturalı', 29116.21, 'Yok', 'Satışta', '2026-07-13 08:22:18', 10, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (963, 'Canon EOS R50', 'Sıfır Ürün', 30387.11, 'Yok', 'Satışta', '2026-07-13 08:22:18', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (964, 'Bose QC Ultra', '1 TB Gri', 28080.55, 'Var', 'Satışta', '2026-07-13 08:22:18', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (965, 'iPhone 16', 'Premium Seri', 61734.31, 'Var', 'Satışta', '2026-07-13 08:22:18', 9, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (966, 'Meta Quest 3', 'Sıfır Ürün', 11781.68, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (967, 'MSI Katana', 'Garantili', 46971.75, 'Var', 'Satışta', '2026-07-13 08:22:18', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (968, 'LG UltraGear', '128 GB Siyah', 51822.65, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 1, 'uploads/users/default.jpg');
+INSERT INTO `products` VALUES (969, 'Anker PowerBank', 'Kutulu', 80068.43, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (970, 'Bose QC Ultra', 'Faturalı', 91559.13, 'Yok', 'Satışta', '2026-07-13 08:22:18', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (971, 'Kindle Paperwhite', 'Kutulu', 63120.93, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (972, 'Acer Nitro', '256 GB Mavi', 1566.32, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (973, 'Apple Watch', '128 GB Siyah', 33697.81, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (974, 'Bose QC Ultra', 'Sıfır Ürün', 80580.84, 'Var', 'Satışta', '2026-07-13 08:22:18', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (975, 'Nintendo Switch', 'Sıfır Ürün', 57764.80, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (976, 'LG UltraGear', '128 GB Siyah', 90816.09, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (977, 'Garmin Fenix', '512 GB Beyaz', 53242.76, 'Yok', 'Satışta', '2026-07-13 08:22:18', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (978, 'Huawei MateBook', 'Garantili', 78633.04, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (979, 'Anker PowerBank', 'Sıfır Ürün', 53382.63, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (980, 'Razer Blade', 'İkinci El Temiz', 22689.27, 'Yok', 'Satışta', '2026-07-13 08:22:18', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (981, 'Apple Watch', '512 GB Beyaz', 21081.11, 'Yok', 'Satışta', '2026-07-13 08:22:18', 1, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (982, 'Garmin Fenix', 'Yeni Model', 61616.40, 'Yok', 'Satışta', '2026-07-13 08:22:18', 19, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (983, 'AirPods Pro', 'Kutulu', 33487.34, 'Var', 'Satışta', '2026-07-13 08:22:18', 15, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (984, 'GoPro Hero', '256 GB Mavi', 23548.58, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (985, 'JBL Charge', 'Kutulu', 5342.15, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 4, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (986, 'Sony WH-1000XM5', '512 GB Beyaz', 23711.97, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 13, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (987, 'Dell XPS', 'İkinci El Temiz', 17375.13, 'Yok', 'Satışta', '2026-07-13 08:22:18', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (988, 'Huawei MateBook', '128 GB Siyah', 25862.13, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 12, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (989, 'PlayStation 5', 'Kutulu', 69813.33, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (990, 'Samsung Galaxy S25', '512 GB Beyaz', 9839.81, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (991, 'Garmin Fenix', '128 GB Siyah', 7246.85, 'Yok', 'Satışta', '2026-07-13 08:22:18', 20, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (992, 'MacBook Pro', 'Garantili', 84964.92, 'Yok', 'Satışta', '2026-07-13 08:22:18', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (993, 'Nintendo Switch', 'Sıfır Ürün', 19776.17, 'Yok', 'Satışta', '2026-07-13 08:22:18', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (994, 'Garmin Fenix', '1 TB Gri', 10220.02, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (995, 'Lenovo ThinkPad', '512 GB Beyaz', 81283.69, 'Var', 'Satışta', '2026-07-13 08:22:18', 18, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (996, 'AirPods Pro', 'Kutulu', 61451.85, 'Yok', 'Satışta', '2026-07-13 08:22:18', 17, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (997, 'Huawei MateBook', 'Yeni Model', 32688.28, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 2, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (998, 'PlayStation 5', 'Hızlı Teslim', 45678.71, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (999, 'MacBook Pro', 'Kutulu', 20210.77, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (1000, 'MSI Katana', 'Yeni Model', 12087.85, 'Var', 'Satışta', '2026-07-13 08:22:18', 11, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (1001, 'Garmin Fenix', 'Yeni Model', 76239.43, 'Var', 'Satışta Değil', '2026-07-13 08:22:18', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (1002, 'PlayStation 5', 'Sıfır Ürün', 76515.99, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 14, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (1003, 'MSI Katana', 'İkinci El Temiz', 39516.85, 'Var', 'Satışta', '2026-07-13 08:22:18', 5, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (1004, 'Canon EOS R50', 'Premium Seri', 94875.49, 'Var', 'Satışta', '2026-07-13 08:22:18', 3, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (1005, 'iPad Air', 'Sıfır Ürün', 90000.21, 'Yok', 'Satışta Değil', '2026-07-13 08:22:18', 8, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (1006, 'Bose QC Ultra', '256 GB Mavi', 67160.03, 'Var', 'Satışta', '2026-07-13 08:22:18', 7, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (1007, 'Asus ROG', 'İkinci El Temiz', 53472.14, 'Var', 'Satışta', '2026-07-13 08:22:18', 16, 'uploads/users/default.png');
+INSERT INTO `products` VALUES (1008, 'Asus', 'Rog', 10000.00, 'Var', 'Satışta', '2026-07-13 10:24:28', 18, 'uploads/users/default.png');
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `token` varchar(255) DEFAULT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
---
--- Tablo döküm verisi `users`
---
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `role` enum('admin','user') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'user',
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT 'uploads/users/default.jpg',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
-INSERT INTO `users` (
-    `id`,
-    `username`,
-    `password`,
-    `created_at`,
-    `token`
-  )
-VALUES (
-    1,
-    'admin',
-    '123456',
-    '2026-07-11 21:06:34',
-    NULL
-  ),
-  (
-    2,
-    'admin',
-    '123456',
-    '2026-07-11 21:15:21',
-    NULL
-  ),
-  (
-    3,
-    'baran',
-    '123456',
-    '2026-07-11 22:01:33',
-    NULL
-  );
---
--- Dökümü yapılmış tablolar için indeksler
---
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO `users` VALUES (1, 'admin', '123456', '2026-07-11 21:06:34', 'b18ff612099e17eaf42211e52093a1173221294df3121fea80cc5813f42c4c5f', 'admin', 'uploads/users/user_1.jpg');
+INSERT INTO `users` VALUES (2, 'baran', '123456', '2026-07-11 22:01:33', 'ef6b83b81545653b2ea2c67800326b4a6ebe88833d849f6894d1c7f8bc9639e5', 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (3, 'mehmet', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (4, 'ayse', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (5, 'fatma', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (6, 'zeynep', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/kadın.jpg');
+INSERT INTO `users` VALUES (7, 'emre', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/erkek.jpg');
+INSERT INTO `users` VALUES (8, 'burak', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (9, 'can', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (10, 'elif', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (11, 'selin', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (12, 'cem', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (13, 'mert', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (14, 'deniz', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (15, 'ece', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (16, 'kerem', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (17, 'oguz', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (18, 'buse', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (19, 'yusuf', '123456', '2026-07-13 08:14:13', NULL, 'user', 'uploads/users/default.jpg');
+INSERT INTO `users` VALUES (20, 'mete', 'junior', '2026-07-13 08:16:18', NULL, 'user', 'uploads/users/default.jpg');
 
---
--- Tablo için indeksler `products`
---
-ALTER TABLE `products`
-ADD PRIMARY KEY (`id`);
---
--- Tablo için indeksler `users`
---
-ALTER TABLE `users`
-ADD PRIMARY KEY (`id`);
---
--- Dökümü yapılmış tablolar için AUTO_INCREMENT değeri
---
-
---
--- Tablo için AUTO_INCREMENT değeri `products`
---
-ALTER TABLE `products`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
-  AUTO_INCREMENT = 8;
---
--- Tablo için AUTO_INCREMENT değeri `users`
---
-ALTER TABLE `users`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
-  AUTO_INCREMENT = 4;
-COMMIT;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */
-;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */
-;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */
-;
+SET FOREIGN_KEY_CHECKS = 1;

@@ -34,6 +34,9 @@ $("#loginBtn").click(function () {
                 "token",
                 response.token
             );
+            localStorage.setItem("role", response.role);
+
+            localStorage.setItem("username", response.username);
 
             toastr.success("Giriş başarılı");
 

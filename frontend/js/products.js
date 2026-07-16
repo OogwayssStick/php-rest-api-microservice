@@ -1,4 +1,26 @@
+$("#sidebar").load("components/sidebar.html", function () {
 
+    $('a[href="products.html"]').addClass("active");
+
+});
+
+$("#navbar").load("components/navbar.html", function () {
+
+    $("#pageTitle").text("Products");
+
+});
+$("#sidebar").load("components/sidebar.html", function () {
+
+    $('a[href="products.html"]').addClass("active");
+
+});
+
+$("#navbar").load("components/navbar.html", function () {
+
+    $("#pageTitle").text("Products");
+
+});
+$("#pageTitle").text("Products");
 toastr.options = {
 
     closeButton: true,
@@ -13,20 +35,13 @@ toastr.options = {
 let table = null;
 
 $(document).ready(function () {
-    if (!localStorage.getItem("token")) {
 
-        window.location.href = "login.html";
-
-    }
     loadProducts();
 
     $("#addProduct").click(function () {
         saveProduct();
     });
 
-
-
-    // Düzenle
     $(document).on("click", ".editBtn", function () {
 
         $("#product_name").val($(this).data("name"));
@@ -41,11 +56,8 @@ $(document).ready(function () {
 
     });
 
-    // Sil
     $(document).on("click", ".deleteBtn", function () {
-
         deleteProduct($(this).data("id"));
-
     });
 
 });
@@ -80,7 +92,7 @@ function loadProducts() {
                 $("#productTable").append(`
 
 <tr>
-
+<td><img src="../${product.image}" width="45" height="45" class="rounded-circle border"></td>
 <td>${product.id}</td>
 
 <td>${product.product_name}</td>
@@ -133,7 +145,7 @@ Sil
 
             table = $("#productsTable").DataTable({
 
-                pageLength: 5,
+                pageLength: Number(localStorage.getItem("pageSize") || 5),
 
                 destroy: true,
 
@@ -165,13 +177,23 @@ function saveProduct() {
 
     let id = $("#addProduct").attr("data-id");
 
-
     let url = "../api/products/addProduct.php";
 
     if (id) {
-
         url = "../api/products/updateProduct.php";
+    }
 
+    let formData = new FormData();
+
+    formData.append("id", id ?? "");
+    formData.append("product_name", $("#product_name").val());
+    formData.append("description", $("#description").val());
+    formData.append("price", $("#price").val());
+    formData.append("discount", $("#discount").val());
+    formData.append("sale_status", $("#sale_status").val());
+
+    if ($("#image")[0].files.length > 0) {
+        formData.append("image", $("#image")[0].files[0]);
     }
 
     $.ajax({
@@ -180,35 +202,19 @@ function saveProduct() {
 
         type: "POST",
 
-        contentType: "application/json",
-
         headers: {
-
             Authorization: localStorage.getItem("token")
-
         },
 
-        data: JSON.stringify({
+        data: formData,
 
-            id: id,
+        processData: false,
 
-            product_name: $("#product_name").val(),
+        contentType: false,
 
-            description: $("#description").val(),
+        success: function (res) {
 
-            price: $("#price").val(),
-
-            discount: $("#discount").val(),
-
-            sale_status: $("#sale_status").val()
-
-        }),
-
-        success: function (response) {
-
-            console.log(response);
-
-            toastr.success(response.message);
+            toastr.success(res.message);
 
             clearForm();
 
@@ -220,14 +226,13 @@ function saveProduct() {
 
             console.log(xhr.responseText);
 
-            toastr.error(xhr.responseJSON.message);
+            toastr.error(xhr.responseJSON?.message || "İşlem başarısız.");
 
         }
 
     });
 
 }
-
 
 
 function deleteProduct(id) {

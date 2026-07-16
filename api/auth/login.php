@@ -1,4 +1,5 @@
 <?php
+
 header('Content-Type: application/json; charset=utf-8');
 header("Content-Type: application/json");
 
@@ -69,8 +70,9 @@ if ($result->num_rows > 0) {
         );
         echo json_encode([
             "success" => true,
-            "message" => "Giriş başarılı",
-            "token" => $token
+            "token" => $token,
+            "role" => $user["role"],
+            "username" => $user["username"]
         ]);
     } else {
 

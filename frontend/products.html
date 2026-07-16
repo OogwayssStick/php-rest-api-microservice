@@ -2,101 +2,157 @@
 <html lang="tr">
 
 <head>
+
     <meta charset="UTF-8">
+
     <title>Ürün Yönetimi</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
+    <link rel="stylesheet" href="css/style.css">
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 
-
 </head>
 
 <body>
-    <div class="container mt-5">
 
-        <h2 class="mb-4">
+    <div class="d-flex">
 
-            Ürün Yönetim Paneli
-            <button id="logoutBtn" class="btn btn-danger">
-                Çıkış Yap
-            </button>
-        </h2>
+        <div id="sidebar"></div>
 
-        <div class="row">
+        <div class="content">
 
-            <div class="col-md-6">
+            <div id="navbar"></div>
 
-                <input id="product_name" class="form-control mb-3" placeholder="Ürün Adı">
+            <div class="card shadow mb-4">
 
-                <textarea id="description" class="form-control mb-3" placeholder="Açıklama"></textarea>
+                <div class="card-header bg-primary text-white">
 
-                <input type="number" id="price" class="form-control mb-3" placeholder="Fiyat">
+                    <h4 class="mb-0">
 
-                <select id="discount" class="form-control mb-3">
+                        Ürün Ekle / Güncelle
 
-                    <option>Yok</option>
+                    </h4>
 
-                    <option>Var</option>
+                </div>
 
-                </select>
+                <div class="card-body">
 
-                <select id="sale_status" class="form-control mb-3">
+                    <div class="row">
 
-                    <option>Satışta</option>
+                        <div class="col-md-6">
 
-                    <option>Satışta Değil</option>
+                            <input id="product_name" class="form-control mb-3" placeholder="Ürün Adı">
 
-                </select>
+                            <textarea id="description" class="form-control mb-3" placeholder="Açıklama"></textarea>
 
-                <button id="addProduct" class="btn btn-primary">
+                            <input type="number" id="price" class="form-control mb-3" placeholder="Fiyat">
 
-                    Ürün Ekle
+                            <select id="discount" class="form-select mb-3">
 
-                </button>
+                                <option>Yok</option>
+                                <option>Var</option>
+
+                            </select>
+
+                            <select id="sale_status" class="form-select mb-3">
+
+                                <option>Satışta</option>
+                                <option>Satışta Değil</option>
+
+                            </select>
+
+                            <!-- ÜRÜN RESMİ -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+
+                                    Ürün Resmi
+
+                                </label>
+
+                                <input type="file" id="image" class="form-control" accept=".jpg,.jpeg,.png">
+
+                            </div>
+
+                            <button id="addProduct" class="btn btn-primary">
+
+                                Ürün Ekle
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card shadow">
+
+                <div class="card-header bg-dark text-white">
+
+                    <h4 class="mb-0">
+
+                        Ürün Listesi
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <table id="productsTable" class="table table-striped table-hover">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                <th>Fotoğraf</th>
+                                <th>ID</th>
+                                <th>Ürün</th>
+                                <th>Açıklama</th>
+                                <th>Fiyat</th>
+                                <th>İndirim</th>
+                                <th>Durum</th>
+                                <th>İşlemler</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="productTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
 
             </div>
 
         </div>
 
-        <hr>
-
-
-
-        <table id="productsTable" class="table table-bordered table-hover">
-
-            <thead class="table-dark">
-
-                <tr>
-
-                    <th>ID</th>
-                    <th>Ürün</th>
-                    <th>Açıklama</th>
-                    <th>Fiyat</th>
-                    <th>İndirim</th>
-                    <th>Durum</th>
-                    <th>İşlemler</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="productTable">
-
-            </tbody>
-
-        </table>
-
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="js/products.js?v=1.1"></script>
+
+    <script src="js/common.js"></script>
+
+    <script src="js/products.js"></script>
 
 </body>
 
