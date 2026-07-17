@@ -10,6 +10,18 @@ RUN apt-get update && \
     a2enmod rewrite && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-RUN mkdir -p /var/www/html/logs \
-    && chown -R www-data:www-data /var/www/html/logs \
-    && chmod -R 775 /var/www/html/logs
+
+# Proje dosyalarını container'a kopyala
+COPY . /var/www/html/
+
+# Apache configuration
+COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+# Logs klasörünü oluştur ve izinleri ayarla
+RUN mkdir -p /var/www/html/logs && \
+    chown -R www-data:www-data /var/www/html/logs && \
+    chmod -R 775 /var/www/html/logs
+
+WORKDIR /var/www/html
+
+EXPOSE 80
