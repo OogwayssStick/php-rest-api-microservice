@@ -1,0 +1,21 @@
+name: Docker Build Test
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository kodunu indir
+        uses: actions/checkout@v4
+
+      - name: Docker image build et
+        run: docker build -t php-rest-api:test .
