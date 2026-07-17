@@ -1,4 +1,4 @@
-name: Docker Build and Push
+name: Docker Build Push and Deploy
 
 on:
   push:
@@ -20,7 +20,24 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Docker Image Build
-        run: docker build -t oogwayssstick/php-rest-api-microservice:latest .
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/php-rest-api-microservice:latest .
 
       - name: Docker Hub Push
-        run: docker push oogwayssstick/php-rest-api-microservice:latest
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/php-rest-api-microservice:latest
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: AWS EC2 Deploy
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/php-api
+            docker compose -f docker-compose.prod.yml pull web
+            docker compose -f docker-compose.prod.yml up -d --force-recreate web
+            docker image prune -f
