@@ -1,21 +1,26 @@
-name: Docker Build Test
+name: Docker Build and Push
 
 on:
   push:
     branches:
       - main
 
-  pull_request:
-    branches:
-      - main
-
 jobs:
-  docker-build:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
       - name: Repository kodunu indir
         uses: actions/checkout@v4
 
-      - name: Docker image build et
-        run: docker build -t php-rest-api:test .
+      - name: Docker Hub Login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Docker Image Build
+        run: docker build -t oogwayssstick/php-rest-api-microservice:latest .
+
+      - name: Docker Hub Push
+        run: docker push oogwayssstick/php-rest-api-microservice:latest
