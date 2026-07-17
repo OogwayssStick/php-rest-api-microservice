@@ -1,14 +1,19 @@
 <?php
 
-$host = "localhost";
-$user = "projectuser";
+$host = "db";
+$username = "admin";
 $password = "123456";
-$database = "mircroservice_db"; // Senin oluşturduğun isim
+$database = "microservice_db";
 
-$conn = new mysqli($host, $user, $password, $database);
+$conn = new mysqli(
+    $host,
+    $username,
+    $password,
+    $database
+);
 
 if ($conn->connect_error) {
-    die("Bağlantı hatası: " . $conn->connect_error);
+    die("Veritabanı bağlantı hatası: " . $conn->connect_error);
 }
 
 $conn->set_charset("utf8mb4");
