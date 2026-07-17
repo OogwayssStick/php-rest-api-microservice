@@ -1,0 +1,45 @@
+services:
+
+  web:
+    image: oogwayssstick/php-rest-api-microservice:latest
+    container_name: php_api_prod
+
+    ports:
+      - "8082:80"
+
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_api_prod
+
+    restart: always
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: microservice_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 123456
+
+    volumes:
+      - mysql_prod_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin_api_prod
+
+    restart: always
+
+    ports:
+      - "8083:80"
+
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+
+    depends_on:
+      - db
+
+volumes:
+  mysql_prod_data:
