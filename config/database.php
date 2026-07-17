@@ -1,9 +1,9 @@
 <?php
 
-$host = "db";
-$username = "admin";
-$password = "123456";
-$database = "microservice_db";
+$host = getenv("DB_HOST") ?: "db";
+$username = getenv("DB_USER") ?: "admin";
+$password = getenv("DB_PASSWORD") ?: "";
+$database = getenv("DB_NAME") ?: "microservice_db";
 
 $conn = new mysqli(
     $host,
