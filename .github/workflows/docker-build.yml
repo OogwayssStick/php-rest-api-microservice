@@ -63,6 +63,11 @@ jobs:
 
             if [ "$STATUS" = "healthy" ]; then
               echo "✅ Deployment başarılı."
+              echo "Eski Tag: $OLD_TAG"
+
+              echo "Yeni Tag: $IMAGE_TAG"
+
+              echo "Health Status: $STATUS"
             else
               echo "❌ Deployment başarısız! Rollback başlatılıyor..."
 
