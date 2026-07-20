@@ -45,37 +45,50 @@ jobs:
           script: |
             cd /home/ubuntu/php-api
 
-            # Eski çalışan image'ın tag'ini kaydet
+            echo "========== DEPLOY BAŞLADI =========="
+
+            # Şu an çalışan image'ın tag'ini al
             OLD_TAG=$(docker inspect --format='{{.Config.Image}}' php_api_prod | cut -d':' -f2)
 
-            # Yeni commit'in image'ını kullan
+            echo "Eski Tag : $OLD_TAG"
+
+            # Yeni commit tag'i
             export IMAGE_TAG=${{ github.sha }}
 
-            # Yeni image'ı indir ve çalıştır
+            echo "Yeni Tag : $IMAGE_TAG"
+
+            # Yeni image'ı indir
             docker compose -f docker-compose.prod.yml pull web
+
+            # Yeni image ile ayağa kaldır
             docker compose -f docker-compose.prod.yml up -d --force-recreate web
 
-            # Uygulamanın açılmasını bekle
-            sleep 20
+            # 30 kez health kontrolü yap
+            for i in {1..30}
+            do
+              STATUS=$(docker inspect --format='{{.State.Health.Status}}' php_api_prod)
 
-            # Health durumunu kontrol et
-            STATUS=$(docker inspect --format='{{.State.Health.Status}}' php_api_prod)
+              echo "Deneme $i -> $STATUS"
 
-            if [ "$STATUS" = "healthy" ]; then
-              echo "✅ Deployment başarılı."
-              echo "Eski Tag: $OLD_TAG"
+              if [ "$STATUS" = "healthy" ]; then
+                echo "✅ Deployment başarılı."
 
-              echo "Yeni Tag: $IMAGE_TAG"
+                docker image prune -f
 
-              echo "Health Status: $STATUS"
-            else
-              echo "❌ Deployment başarısız! Rollback başlatılıyor..."
+                exit 0
+              fi
 
-              export IMAGE_TAG=$OLD_TAG
+              sleep 2
+            done
 
-              docker compose -f docker-compose.prod.yml up -d --force-recreate web
+            echo "❌ Deployment başarısız."
 
-              exit 1
-            fi
+            echo "Rollback başlatılıyor..."
+
+            export IMAGE_TAG=$OLD_TAG
+
+            docker compose -f docker-compose.prod.yml up -d --force-recreate web
 
             docker image prune -f
+
+            exit 1
