@@ -44,6 +44,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ubuntu/php-api
+            OLD_IMAGE=$(docker inspect --format='{{.Config.Image}}' php_api_prod)
             export IMAGE_TAG=${{ github.sha }}
             docker compose -f docker-compose.prod.yml pull web
             docker compose -f docker-compose.prod.yml up -d --force-recreate web
