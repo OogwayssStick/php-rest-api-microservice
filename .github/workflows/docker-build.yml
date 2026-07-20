@@ -42,53 +42,12 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
+
           script: |
             cd /home/ubuntu/php-api
 
-            echo "========== DEPLOY BAŞLADI =========="
-
-            # Şu an çalışan image'ın tag'ini al
-            OLD_TAG=$(docker inspect --format='{{.Config.Image}}' php_api_prod | cut -d':' -f2)
-
-            echo "Eski Tag : $OLD_TAG"
-
-            # Yeni commit tag'i
             export IMAGE_TAG=${{ github.sha }}
 
-            echo "Yeni Tag : $IMAGE_TAG"
+            chmod +x scripts/deploy.sh
 
-            # Yeni image'ı indir
-            docker compose -f docker-compose.prod.yml pull web
-
-            # Yeni image ile ayağa kaldır
-            docker compose -f docker-compose.prod.yml up -d --force-recreate web
-
-            # 30 kez health kontrolü yap
-            for i in {1..30}
-            do
-              STATUS=$(docker inspect --format='{{.State.Health.Status}}' php_api_prod)
-
-              echo "Deneme $i -> $STATUS"
-
-              if [ "$STATUS" = "healthy" ]; then
-                echo "✅ Deployment başarılı."
-
-                docker image prune -f
-
-                exit 0
-              fi
-
-              sleep 2
-            done
-
-            echo "❌ Deployment başarısız."
-
-            echo "Rollback başlatılıyor..."
-
-            export IMAGE_TAG=$OLD_TAG
-
-            docker compose -f docker-compose.prod.yml up -d --force-recreate web
-
-            docker image prune -f
-
-            exit 1
+            ./scripts/deploy.sh
