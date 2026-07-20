@@ -27,7 +27,9 @@ jobs:
             .
 
       - name: Docker Hub Push
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/php-rest-api-microservice:latest
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/php-rest-api-microservice:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/php-rest-api-microservice:${{ github.sha }}
 
   deploy:
     needs: build-and-push
