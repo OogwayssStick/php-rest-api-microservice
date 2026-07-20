@@ -44,8 +44,33 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ubuntu/php-api
+
+            # Eski çalışan image'ın tag'ini kaydet
             OLD_TAG=$(docker inspect --format='{{.Config.Image}}' php_api_prod | cut -d':' -f2)
+
+            # Yeni commit'in image'ını kullan
             export IMAGE_TAG=${{ github.sha }}
+
+            # Yeni image'ı indir ve çalıştır
             docker compose -f docker-compose.prod.yml pull web
             docker compose -f docker-compose.prod.yml up -d --force-recreate web
+
+            # Uygulamanın açılmasını bekle
+            sleep 20
+
+            # Health durumunu kontrol et
+            STATUS=$(docker inspect --format='{{.State.Health.Status}}' php_api_prod)
+
+            if [ "$STATUS" = "healthy" ]; then
+              echo "✅ Deployment başarılı."
+            else
+              echo "❌ Deployment başarısız! Rollback başlatılıyor..."
+
+              export IMAGE_TAG=$OLD_TAG
+
+              docker compose -f docker-compose.prod.yml up -d --force-recreate web
+
+              exit 1
+            fi
+
             docker image prune -f
