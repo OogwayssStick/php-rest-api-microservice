@@ -1,20 +1,56 @@
+version: "3.9"
+
 services:
 
-  web:
-    image: oogwayssstick/php-rest-api-microservice:latest
-    container_name: php_api_prod
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_prod
+
+    restart: unless-stopped
 
     ports:
       - "8082:80"
 
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+
     depends_on:
-      - db
+      web:
+        condition: service_healthy
+
+    networks:
+      - backend
+
+  web:
+    image: oogwayssstick/php-rest-api-microservice:${IMAGE_TAG:-latest}
+
+    container_name: php_api_prod
+
+    restart: unless-stopped
+
+    expose:
+      - "80"
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - backend
 
   db:
     image: mysql:8.0
+
     container_name: mysql_api_prod
 
-    restart: always
+    restart: unless-stopped
 
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -25,11 +61,21 @@ services:
     volumes:
       - mysql_prod_data:/var/lib/mysql
 
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - backend
+
   phpmyadmin:
     image: phpmyadmin:latest
+
     container_name: phpmyadmin_api_prod
 
-    restart: always
+    restart: unless-stopped
 
     ports:
       - "8083:80"
@@ -39,7 +85,14 @@ services:
       PMA_PORT: 3306
 
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+
+    networks:
+      - backend
+
+networks:
+  backend:
 
 volumes:
   mysql_prod_data:
